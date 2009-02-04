@@ -16,8 +16,6 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.map;
 
-import mudcartographer.map.Room;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -38,12 +36,14 @@ public class MudMap{
     private boolean isChanged;
     private boolean isCurrentRoomChanged;
     private boolean hasNewConnection;
+    private Class roomClass;
 
 
     // create a map of keyboard keys to Directions
     private static Map<Integer, Direction> keyEventDirections = new HashMap<Integer, Direction>();
 
-    public MudMap(){
+    public MudMap(Class pluginRoomClass){
+        this.roomClass = pluginRoomClass;
     }
 
     static {
@@ -76,8 +76,8 @@ public class MudMap{
         return initialRoom;
     }
 
-    public void setInitialRoom(Room initialRoom){
-        this.initialRoom = initialRoom;
+    public void setupInitialRoom(){
+        this.initialRoom = createRoomInstance();
         setCurrentRoom(initialRoom);
     }
 
@@ -182,7 +182,7 @@ public class MudMap{
      * @return the new room that was created
      */
     public Room createRoom(Direction d, char symbol){
-        Room newRoom = new Room(symbol);
+        Room newRoom = createRoomInstance();
 
         // ToDo: add insertion logic (i.e. inserting one room *between* two rooms
 
@@ -198,6 +198,17 @@ public class MudMap{
         setChanged(true);
 
         return newRoom;
+    }
+
+    private Room createRoomInstance(){
+        Room room;
+        try{
+            room = (Room) roomClass.newInstance();
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("Could not create new room of class " + (roomClass == null ? "[null]" : roomClass.getName()));
+        }
+        return room;
     }
 
     /**

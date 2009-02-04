@@ -15,26 +15,28 @@ You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */package mudcartographer;
 
+import mudcartographer.event.RoomEvent;
+import mudcartographer.gui.MapPainter;
+import mudcartographer.gui.RoomDescriptionPanel;
+import mudcartographer.gui.RoomInfoPanel;
+import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
 import mudcartographer.menu.MenuBar;
+import mudcartographer.plugin.Plugin;
 
 import javax.swing.*;
 import java.awt.*;
-
-import mudcartographer.map.MudMap;
-import mudcartographer.gui.MapPainter;
-import mudcartographer.map.Room;
-import mudcartographer.gui.RoomDescriptionPanel;
-import mudcartographer.gui.RoomInfoPanel;
-import mudcartographer.event.RoomEvent;
 
 /**
  * A MudCartographer application including a map display and room information area
  */
 public class MudCartographer{
-    private final int FRAME_WIDTH = 600;
-    private final int FRAME_HEIGHT = 400;
+    private final int FRAME_WIDTH = 700;
+    private final int FRAME_HEIGHT = 500;
     private final String FRAME_TITLE = "Mud Cartographer";
 
+    public static MudCartographer mudCartographer;
+    private JFrame frame;
     private MudMap map;
     private MudController controller;
     private JScrollPane mapPainterScrollPane;
@@ -43,30 +45,43 @@ public class MudCartographer{
     private MenuBar menuBar;
 
     public static void main(String[] args){
-        MudCartographer mudCartographer = new MudCartographer();
+        mudCartographer = new MudCartographer();
         mudCartographer.load();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
     /**
      * Load up the frame, controls and painter for a MudCartographer
      */
     public void load(){
-        final JFrame f = createAndSetupFrame();
+        frame = createAndSetupFrame();
         controller = MudController.getMudController();
 
-        createMap();
-        createSubPanels();
         createMenu();
 
-        f.setJMenuBar(menuBar);
-        f.add(createMainPanelAndAddSubPanels());
+        frame.setJMenuBar(menuBar);
+        frame.add(createAndAddEmptyMainPanel());
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void loadPlugin(Plugin plugin) {
+        controller.removeAllListeners();
+
+        createMap(plugin.getRoomClass());
+        createSubPanels(plugin);
+
+        frame.add(createMainPanelAndAddSubPanels());
 
         setupEventListeners();
         fireInitialRoomEvent();
 
-        f.pack();
-        f.setVisible(true);
-
+        frame.pack();
+        frame.setVisible(true);
     }
 
     private JFrame createAndSetupFrame() {
@@ -81,25 +96,29 @@ public class MudCartographer{
         return frame;
     }
 
-    private void createMap() {
-        map = new MudMap();
-        map.setInitialRoom(new Room(' '));
+    private void createMap(Class roomClass) {
+        map = new MudMap(roomClass);
+        map.setupInitialRoom();
     }
 
-    private void createSubPanels() {
+    private void createSubPanels(Plugin plugin) {
         createMapPainterScrollPane();
-        roomInfoPanel = new RoomInfoPanel(controller);
-        roomDescriptionPanel = new RoomDescriptionPanel(controller);
+        try{
+            roomInfoPanel = (RoomInfoPanel) plugin.getRoomInfoPanelClass().newInstance();
+            roomDescriptionPanel = (RoomDescriptionPanel) plugin.getRoomDescriptionPanelClass().newInstance();
+        }catch(Exception e){
+
+            e.printStackTrace();
+            throw new RuntimeException("Could not create new description and info panels");
+        }
+
+        roomInfoPanel.initialize(controller);
+        roomDescriptionPanel.initialize(controller);
     }
 
     private void createMapPainterScrollPane() {
         mapPainterScrollPane = new JScrollPane(createMapPainter());
         mapPainterScrollPane.setFocusable(false);
-    }
-
-    // wraps temporal coupling
-    private void addPainterAndCreateFocusBypass(MapPainter painter) {
-        mapPainterScrollPane.setViewportView(painter);
     }
 
     private MapPainter createMapPainter() {
@@ -111,6 +130,16 @@ public class MudCartographer{
     private void createMenu(){
         menuBar = new mudcartographer.menu.MenuBar();
         menuBar.setup();
+    }
+
+    private JPanel createAndAddEmptyMainPanel(){
+        JPanel mainPanel = new JPanel();
+        JLabel instructionLabel = new JLabel("Open a map or create a new map to start.");
+
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(instructionLabel, BorderLayout.CENTER);
+
+        return mainPanel;
     }
 
     private JPanel createMainPanelAndAddSubPanels() {

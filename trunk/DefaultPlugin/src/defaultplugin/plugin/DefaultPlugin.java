@@ -14,15 +14,35 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.plugin;
+package defaultplugin.plugin;
 
+import defaultplugin.file.reader.DefaultReader;
+import defaultplugin.file.writer.DefaultWriter;
+import defaultplugin.map.DefaultRoom;
+import defaultplugin.gui.DefaultDescriptionPanel;
+import defaultplugin.gui.DefaultInfoPanel;
 import mudcartographer.file.reader.FileReader;
 import mudcartographer.file.writer.FileWriter;
+import mudcartographer.plugin.Plugin;
 
-public interface Plugin {
-    public Class getRoomDescriptionPanelClass();
-    public Class getRoomInfoPanelClass();
-    public Class getRoomClass();
-    public FileReader getFileReader();
-    public FileWriter getFileWriter();
+public class DefaultPlugin implements Plugin {
+    public Class getRoomDescriptionPanelClass() {
+        return DefaultDescriptionPanel.class;
+    }
+
+    public Class getRoomInfoPanelClass() {
+        return DefaultInfoPanel.class;
+    }
+
+    public Class getRoomClass() {
+        return DefaultRoom.class;
+    }
+
+    public FileReader getFileReader() {
+        return new DefaultReader();
+    }
+
+    public FileWriter getFileWriter() {
+        return new DefaultWriter();
+    }
 }

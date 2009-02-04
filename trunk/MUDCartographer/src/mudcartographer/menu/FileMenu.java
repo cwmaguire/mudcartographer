@@ -26,5 +26,6 @@ public class FileMenu extends JMenu {
         getAccessibleContext().setAccessibleDescription("Open, Save, Export, etc.");
 
         add(new SaveAsMenuItem());
+        add(new NewMenu());
     }
 }

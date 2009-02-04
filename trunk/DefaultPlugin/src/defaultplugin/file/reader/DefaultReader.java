@@ -14,15 +14,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package file.reader;
+package defaultplugin.file.reader;
+
+import mudcartographer.file.reader.FileReader;
 
 import java.util.Map;
 import java.io.File;
 
-public class AWReader extends FileReader{
-
+public class DefaultReader extends FileReader{
     public Map read(File file) {
         return null;
     }
-
 }

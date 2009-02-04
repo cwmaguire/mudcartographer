@@ -52,7 +52,9 @@ public class RoomInfoPanel extends JPanel implements RoomEventListener {
     private JLabel roomTextColorLabel = new JLabel("Text: ");
     private JLabel roomBackgroundColorLabel = new JLabel("Background: ");
 
-    public RoomInfoPanel(MudController controller){
+    public RoomInfoPanel(){}
+
+    public void initialize(MudController controller){
         this.controller = controller;
         createComponents();
         layoutComponents();

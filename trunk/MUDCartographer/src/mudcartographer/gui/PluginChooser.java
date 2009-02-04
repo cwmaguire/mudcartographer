@@ -14,15 +14,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.plugin;
+package mudcartographer.gui;
 
-import mudcartographer.file.reader.FileReader;
-import mudcartographer.file.writer.FileWriter;
+import javax.swing.*;
 
-public interface Plugin {
-    public Class getRoomDescriptionPanelClass();
-    public Class getRoomInfoPanelClass();
-    public Class getRoomClass();
-    public FileReader getFileReader();
-    public FileWriter getFileWriter();
+public class PluginChooser extends JDialog {
 }

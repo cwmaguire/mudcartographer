@@ -16,74 +16,22 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.gui;
 
+import mudcartographer.MudController;
 import mudcartographer.event.RoomEventListener;
 import mudcartographer.map.Room;
-import mudcartographer.MudController;
-import mudcartographer.event.RoomEvent;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Handles creating and maintaining a panel to
  * display room descriptions
  */
-public class RoomDescriptionPanel extends JPanel implements RoomEventListener {
-    private static Dimension LABEL_DIMENSION = new Dimension(80,20);
+public abstract class RoomDescriptionPanel extends JPanel implements RoomEventListener {
     private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlag();
 
-    private Room room;
-    private MudController controller;
-    private boolean isEnabled;
+    public RoomDescriptionPanel(){}
 
-    private JScrollPane scrollPane;
-    private JPanel northPanel;
-    private JTextArea roomDescriptionTextArea;
-    private JButton editButton;
-    private JLabel roomDescriptionLabel = new JLabel("  Description: ");
-
-    public RoomDescriptionPanel(MudController controller){
-        this.controller = controller;
-        createComponents();
-        layoutComponents();
-        addActionListeners();
-        setBorder(new LineBorder(Color.BLACK));
-        setEnabled(false);
-    }
-
-    /**
-     * Create all the components that are used on the room description panel
-     */
-    public void createComponents(){
-
-        roomDescriptionLabel.setPreferredSize(LABEL_DIMENSION);
-        roomDescriptionTextArea = new JTextArea(4, 50);
-
-        editButton = new JButton("Set Enabled!");
-
-        northPanel = new JPanel();
-
-        scrollPane = new JScrollPane(roomDescriptionTextArea);
-    }
-
-    /**
-     * Layout the description panel components
-     */
-    private void layoutComponents(){
-        northPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        northPanel.add(roomDescriptionLabel);
-        northPanel.add(editButton);
-        northPanel.setAlignmentY(0.0F);
-
-        this.setLayout(new BorderLayout());
-        this.add(northPanel, BorderLayout.NORTH);
-        //this.add(roomDescriptionLabel, BorderLayout.NORTH);
-        //this.add(editButton, BorderLayout.NORTH);
-        this.add(scrollPane, BorderLayout.CENTER);
-    }
+    public abstract void initialize(MudController controller);
 
     /**
      * Sets the enabled state of description box
@@ -92,33 +40,10 @@ public class RoomDescriptionPanel extends JPanel implements RoomEventListener {
     @Override
     public void setEnabled(boolean isEnabled){
         super.setEnabled(isEnabled);
-        this.isEnabled = isEnabled;
-        roomDescriptionTextArea.setEditable(isEnabled);
-        roomDescriptionTextArea.setBackground(isEnabled ? Color.WHITE : new Color(225, 225, 225));
-
-        editButton.setText(isEnabled ? "Save" : "Edit");
     }
 
     public boolean getEnabled(){
-        return isEnabled;
-    }
-
-    /**
-     * Add the action listeners that register when the user has done something or changed something
-     */
-    private void addActionListeners(){
-
-        editButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                RoomDescriptionPanel.this.setEnabled(!RoomDescriptionPanel.this.getEnabled());
-                if(!RoomDescriptionPanel.this.getEnabled()){
-                    room.setDescription(roomDescriptionTextArea.getText());
-                    controller.fireRoomEvent(new RoomEvent(room, ROOM_PROPERTIES, RoomDescriptionPanel.this));
-                }else{
-                    roomDescriptionTextArea.requestFocus();
-                }
-            }
-        });
+        return super.isEnabled();
     }
 
     /**
@@ -127,10 +52,7 @@ public class RoomDescriptionPanel extends JPanel implements RoomEventListener {
      *
      * @param room the room to update the description panel with
      */
-    public void updateRoom(Room room){
-        this.room = room;
-        roomDescriptionTextArea.setText(room.getDescription());
-    }
+    public abstract void updateRoom(Room room);
 
     /**
      * Get the list of Room properties that this component listens for
