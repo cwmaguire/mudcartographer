@@ -14,16 +14,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package event;
+package mudcartographer.event;
 
-import static map.Room.RoomProperty;
+import static mudcartographer.map.Room.RoomProperty;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import map.MudMap;
-import map.Room;
-import event.RoomEvent;
+import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
+import mudcartographer.event.RoomEvent;
 import mudcartographer.MudController;
 
 /**

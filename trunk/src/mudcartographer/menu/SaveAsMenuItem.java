@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package menu;
+package mudcartographer.menu;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -35,8 +35,8 @@ public class SaveAsMenuItem extends JMenuItem {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setAcceptAllFileFilterUsed(false);
-                //fileChooser.setFileFilter(new FileNameExtensionFilter());
-                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("AlexMud World File", ".wld"));
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("AlexMud World File", "wld"));
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPEG", "jpg"));
                 fileChooser.showSaveDialog(null);
                 File file = fileChooser.getSelectedFile();
                 System.out.println("File name is " + file.getName());

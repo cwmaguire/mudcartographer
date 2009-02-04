@@ -14,20 +14,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package file;
+package mudcartographer.plugins;
 
-import map.MudMap;
+import mudcartographer.gui.MapPainter;
 
-import java.io.File;
+import javax.swing.*;
 
-public class AlexMudWorldFileWriter {
-    private File file;
-
-    public AlexMudWorldFileWriter(File file){
-        this.file = file;
-    }
-
-    public void writeMapToFile(MudMap map){
-        
-    }
+public interface Plugin {
+    public JPanel getRoomDescriptionPanel();
+    public JPanel getRoomInfoPanel();
+    public MapPainter getMapPainter();
+    public FileReader getFileReader();
+    public FileWriter getFileWriter();
 }

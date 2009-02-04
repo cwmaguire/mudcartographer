@@ -14,9 +14,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package gui;
+package mudcartographer.gui;
 
-import map.MudMap;
+import mudcartographer.map.MudMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +24,9 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-import event.RoomEventListener;
-import event.MudMapKeyListener;
-import map.Room;
+import mudcartographer.event.RoomEventListener;
+import mudcartographer.event.MudMapKeyListener;
+import mudcartographer.map.Room;
 import mudcartographer.MudController;
 
 /**

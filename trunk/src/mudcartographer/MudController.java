@@ -16,8 +16,8 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer;
 
-import event.RoomEvent;
-import event.RoomEventListener;
+import mudcartographer.event.RoomEvent;
+import mudcartographer.event.RoomEventListener;
 
 import java.util.HashSet;
 import java.util.Set;

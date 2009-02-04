@@ -14,15 +14,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package menu;
+package mudcartographer.menu;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 
-public class MenuBar extends JMenuBar{
+public class FileMenu extends JMenu {
+    public FileMenu(){
+        setText("File");
+        setMnemonic(KeyEvent.VK_F);
+        getAccessibleContext().setAccessibleDescription("Open, Save, Export, etc.");
 
-    public void setup(){
-
-        this.add(new FileMenu());
-
+        add(new SaveAsMenuItem());
     }
 }

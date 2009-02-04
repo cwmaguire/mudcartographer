@@ -15,17 +15,17 @@ You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */package mudcartographer;
 
-import menu.MenuBar;
+import mudcartographer.menu.MenuBar;
 
 import javax.swing.*;
 import java.awt.*;
 
-import map.MudMap;
-import gui.MapPainter;
-import map.Room;
-import gui.RoomDescriptionPanel;
-import gui.RoomInfoPanel;
-import event.RoomEvent;
+import mudcartographer.map.MudMap;
+import mudcartographer.gui.MapPainter;
+import mudcartographer.map.Room;
+import mudcartographer.gui.RoomDescriptionPanel;
+import mudcartographer.gui.RoomInfoPanel;
+import mudcartographer.event.RoomEvent;
 
 /**
  * A MudCartographer application including a map display and room information area
@@ -109,7 +109,7 @@ public class MudCartographer{
     }
 
     private void createMenu(){
-        menuBar = new menu.MenuBar();
+        menuBar = new mudcartographer.menu.MenuBar();
         menuBar.setup();
     }
 
