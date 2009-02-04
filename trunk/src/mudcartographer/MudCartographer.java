@@ -15,10 +15,17 @@ You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */package mudcartographer;
 
+import menu.MenuBar;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+
+import map.MudMap;
+import gui.MapPainter;
+import map.Room;
+import gui.RoomDescriptionPanel;
+import gui.RoomInfoPanel;
+import event.RoomEvent;
 
 /**
  * A MudCartographer application including a map display and room information area
@@ -30,10 +37,10 @@ public class MudCartographer{
 
     private MudMap map;
     private MudController controller;
-    private JScrollPane painterScrollPane;
+    private JScrollPane mapPainterScrollPane;
     private RoomInfoPanel roomInfoPanel;
     private RoomDescriptionPanel roomDescriptionPanel;
-    private MudMenu mudMenu;
+    private MenuBar menuBar;
 
     public static void main(String[] args){
         MudCartographer mudCartographer = new MudCartographer();
@@ -51,7 +58,7 @@ public class MudCartographer{
         createSubPanels();
         createMenu();
 
-        f.setJMenuBar(mudMenu);
+        f.setJMenuBar(menuBar);
         f.add(createMainPanelAndAddSubPanels());
 
         setupEventListeners();
@@ -80,40 +87,19 @@ public class MudCartographer{
     }
 
     private void createSubPanels() {
-        painterScrollPane = createScrollingPainter();
+        createMapPainterScrollPane();
         roomInfoPanel = new RoomInfoPanel(controller);
         roomDescriptionPanel = new RoomDescriptionPanel(controller);
     }
 
-    private JScrollPane createScrollingPainter() {
-        JScrollPane painterScrollPane = new JScrollPane();
-        MapPainter painter = createMapPainter();
-
-        //painterScrollPane.setFocusable(false);
-
-        addPainterAndCreateFocusBypass(painterScrollPane, painter);
-
-        return painterScrollPane;
+    private void createMapPainterScrollPane() {
+        mapPainterScrollPane = new JScrollPane(createMapPainter());
+        mapPainterScrollPane.setFocusable(false);
     }
 
     // wraps temporal coupling
-    private void addPainterAndCreateFocusBypass(JScrollPane painterScrollPane, MapPainter painter) {
-        painterScrollPane.add(painter);
-        setupMapPainterParentFocusBypass(painter);
-    }
-
-    private void setupMapPainterParentFocusBypass(final MapPainter painter) {
-        System.out.println(painter.getParent().getClass().getName());
-
-        painter.getParent().addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                System.out.println(e.getClass() + ": " + e.toString());
-                painter.requestFocus();
-            }
-
-            public void focusLost(FocusEvent e) {
-            }
-        });
+    private void addPainterAndCreateFocusBypass(MapPainter painter) {
+        mapPainterScrollPane.setViewportView(painter);
     }
 
     private MapPainter createMapPainter() {
@@ -123,15 +109,15 @@ public class MudCartographer{
     }
 
     private void createMenu(){
-        mudMenu = new MudMenu();
-        mudMenu.setup();
+        menuBar = new menu.MenuBar();
+        menuBar.setup();
     }
 
     private JPanel createMainPanelAndAddSubPanels() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setFocusable(false);
-        mainPanel.add(painterScrollPane, BorderLayout.CENTER);
+        mainPanel.add(mapPainterScrollPane, BorderLayout.CENTER);
         mainPanel.add(roomInfoPanel, BorderLayout.EAST);
         mainPanel.add(roomDescriptionPanel, BorderLayout.SOUTH);
         return mainPanel;

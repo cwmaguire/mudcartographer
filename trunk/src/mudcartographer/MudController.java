@@ -16,6 +16,9 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer;
 
+import event.RoomEvent;
+import event.RoomEventListener;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,7 +57,7 @@ public class MudController{
         // fire events against registered targets that aren't the source
         for(RoomEventListener listener : listeners){
             // to match one set to another I going to bitwise and them
-            if(!listener.equals(roomEvent.getSource()) && (roomEvent.getProperties() & listener.getProperties()) > 0){
+            if(!listener.equals(roomEvent.getSource()) && (roomEvent.getProperties() & listener.getRelevantRoomEventFlags()) > 0){
                 listener.updateRoom(roomEvent.getRoom());
             }
         }
