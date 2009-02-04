@@ -14,7 +14,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package file.writer;
+package mudcartographer.menu;
 
-public class Writer {
+import mudcartographer.plugin.PluginImpl;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+
+public class NewMenu extends JMenu {
+
+    public NewMenu(){
+        setText("New ...");
+        setMnemonic(KeyEvent.VK_N);
+        getAccessibleContext().setAccessibleDescription("Create a new map");
+
+        for(PluginImpl pluginImpl : PluginImpl.values()){
+             add (new NewMenuItem(pluginImpl));
+        }
+    }
 }

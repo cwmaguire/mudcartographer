@@ -70,4 +70,8 @@ public class MudController{
     public void removeListener(RoomEventListener listener){
         listeners.remove(listener);
     }
+
+    public void removeAllListeners(){
+        listeners.clear();
+    }
 }

@@ -14,15 +14,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.map;
+package defaultplugin.map;
+
+import mudcartographer.map.Room;
+import mudcartographer.map.MudMap;
 
 import java.awt.*;
 
-/**
- * Represents a "drawable" "room"
- */
-public abstract class Room{
-    // ToDo: these will need to become functions of a zoom factor
+public class DefaultRoom extends Room { // ToDo: these will need to become functions of a zoom factor
     //       when we add zooming.
     //       Actually, we may be able to use a filter to do the scaling
     public static final int BOX_WIDTH_HEIGHT = 20;
@@ -47,7 +46,7 @@ public abstract class Room{
     private boolean isChanged;
     private String description;
 
-    public enum RoomProperty{
+    public enum RoomProperty {
         SYMBOL(1),
         ID(2),
         RECTANGLE(4),
@@ -59,144 +58,149 @@ public abstract class Room{
 
         private int flag;
 
-        RoomProperty(int flag){
+        RoomProperty(int flag) {
             this.flag = flag;
         }
 
-        public int getFlag(){
+        public int getFlag() {
             return flag;
         }
 
-        public static int getAll(){
+        public static int getAll() {
             return SYMBOL.getFlag() | ID.getFlag() | RECTANGLE.getFlag() | POINT.getFlag() | TEXT_COLOR.getFlag() | BACKGROUND_COLOR.getFlag() | DESCRIPTION.getFlag();
         }
     }
 
-    public Room(){
+    public DefaultRoom() {
         this(DEFAULT_SYMBOL);
     }
 
-    public Room(char symbol){
+    public DefaultRoom(char symbol) {
         this.symbol = symbol;
         this.ID = useID();
     }
 
     /**
      * Get a room attached to this room
+     *
      * @param d the direction of the attached room
      * @return the room in the specified direction or null if no room exists
      */
-    public Room getRoom(MudMap.Direction d){
+    public Room getRoom(MudMap.Direction d) {
         return rooms[d.ordinal()];
     }
 
-    public void setRoom(Room r, MudMap.Direction d){
+    public void setRoom(Room r, MudMap.Direction d) {
         rooms[d.ordinal()] = r;
     }
 
-    public char getSymbol(){
+    public char getSymbol() {
         return symbol;
     }
 
-    public void setSymbol(char symbol){
+    public void setSymbol(char symbol) {
         this.symbol = symbol;
         this.setChanged(true);
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getCurrentOperationID(){
+    public int getCurrentOperationID() {
         return currentOperationID;
     }
 
-    public void setCurrentOperationID(int currentOperationID){
+    public void setCurrentOperationID(int currentOperationID) {
         this.currentOperationID = currentOperationID;
     }
 
-    private int useID(){
+    private int useID() {
         return nextID++;
     }
 
-    public int getID(){
+    public int getID() {
         return ID;
     }
 
-    public void setID(int ID){
+    public void setID(int ID) {
         this.ID = ID;
     }
 
     /**
      * Get the point and dimensions for the current drawing of this room
+     *
      * @return pixel point and pixel dimensions of the room
      */
-    public Rectangle getRectangle(){
+    public Rectangle getRectangle() {
         return rectangle;
     }
 
     /**
      * Set the point and dimensions for the current drawing of this room
+     *
      * @param rectangle pixel point and pixel dimensions for the current drawing of this room
      */
-    public void setRectangle(Rectangle rectangle){
+    public void setRectangle(Rectangle rectangle) {
         this.rectangle = rectangle;
     }
 
     /**
      * Get the current coordinates (in rooms, not pixels) of this room
+     *
      * @return current room coordinates of this room
      */
-    public Point getPoint(){
+    public Point getPoint() {
         return point;
     }
 
     /**
      * Set the current room coordinates of this room
+     *
      * @param point coordinates of the current room (in rooms, not pixels)
      */
-    public void setPoint(Point point){
+    public void setPoint(Point point) {
         this.point = point;
     }
 
-    public Color getTextColor(){
+    public Color getTextColor() {
         return textColor;
     }
 
-    public void setTextColor(Color textColor){
+    public void setTextColor(Color textColor) {
         this.textColor = textColor;
         this.setChanged(true);
     }
 
-    public Color getBackgroundColor(){
+    public Color getBackgroundColor() {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(Color backgroundColor){
+    public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         this.setChanged(true);
     }
 
-    public boolean isChanged(){
+    public boolean isChanged() {
         return isChanged;
     }
 
-    public void setChanged(boolean changed){
+    public void setChanged(boolean changed) {
         isChanged = changed;
     }
 
     /**
      * Wrap the paint function to allow setting the rectangle
      *
-     * @param g2 the graphics object to draw to
+     * @param g2        the graphics object to draw to
      * @param rectangle the rectangle to draw in
      * @param isCurrent whether or not to highlight the room
      */
-    public void paint(Graphics2D g2, Rectangle rectangle, boolean isCurrent){
+    public void paint(Graphics2D g2, Rectangle rectangle, boolean isCurrent) {
         setRectangle(rectangle);
         paint(g2, isCurrent);
     }
@@ -204,10 +208,10 @@ public abstract class Room{
     /**
      * Paint this room
      *
-     * @param g2 the graphics object to paint to
+     * @param g2        the graphics object to paint to
      * @param isCurrent whether to highlight the current room
      */
-    public void paint(Graphics2D g2, boolean isCurrent){
+    public void paint(Graphics2D g2, boolean isCurrent) {
         //Rectangle rectangle = getRectangle();
         int x = (int) rectangle.getX();
         int y = (int) rectangle.getY();
