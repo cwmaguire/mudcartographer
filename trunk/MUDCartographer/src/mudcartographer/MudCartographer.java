@@ -65,8 +65,9 @@ public class MudCartographer{
         }else{
             frame = createAndSetupFrame();
             controller = MudController.getMudController();
-            frame.setJMenuBar(createMenu());
         }
+
+        frame.setJMenuBar(createMenu());
 
         if(plugin == null){
             frame.add(createAndAddEmptyMainPanel());
