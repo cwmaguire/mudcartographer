@@ -20,12 +20,28 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 public class FileMenu extends JMenu {
+
+    private NewMenu newMenu;
+    private SaveAsMenuItem saveAsMenuItem;
+
     public FileMenu(){
         setText("File");
         setMnemonic(KeyEvent.VK_F);
         getAccessibleContext().setAccessibleDescription("Open, Save, Export, etc.");
 
-        add(new SaveAsMenuItem());
-        add(new NewMenu());
+        createAndAddMenusAndItems();
     }
+
+    private void createAndAddMenusAndItems() {
+        newMenu = new NewMenu();
+        saveAsMenuItem = new SaveAsMenuItem();
+
+        add(newMenu);
+        add(saveAsMenuItem);
+    }
+
+    public void setIsEditing(boolean isEditing){
+        saveAsMenuItem.setEnabled(isEditing);
+    }
+
 }

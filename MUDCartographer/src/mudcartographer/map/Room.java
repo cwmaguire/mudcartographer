@@ -80,6 +80,10 @@ public abstract class Room{
         this.symbol = symbol;
         this.ID = useID();
     }
+    
+    public static void resetRoomID(){
+        nextID = 0;
+    }
 
     /**
      * Get a room attached to this room

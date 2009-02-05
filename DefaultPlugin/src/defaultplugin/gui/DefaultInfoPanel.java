@@ -16,5 +16,7 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package defaultplugin.gui;
 
-public class DefaultInfoPanel {
+import mudcartographer.gui.RoomInfoPanel;
+
+public class DefaultInfoPanel extends RoomInfoPanel {
 }

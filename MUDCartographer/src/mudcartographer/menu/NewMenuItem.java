@@ -33,7 +33,7 @@ public class NewMenuItem extends JMenuItem {
 
         addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                MudCartographer.mudCartographer.loadPlugin(pluginImpl.getPlugin());
+                MudCartographer.mudCartographer.load(pluginImpl.getPlugin());
             }
         });
 

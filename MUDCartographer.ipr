@@ -39,7 +39,64 @@
     <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
   </component>
   <component name="CodeStyleSettingsManager">
-    <option name="PER_PROJECT_SETTINGS" />
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <ADDITIONAL_INDENT_OPTIONS fileType="groovy">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="gsp">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="java">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="js">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="jsp">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="xml">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+      </value>
+    </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="false" />
   </component>
   <component name="CompilerConfiguration">
@@ -277,12 +334,13 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AlexMUD/AlexMUD.iml" filepath="$PROJECT_DIR$/AlexMUD/AlexMUD.iml" />
       <module fileurl="file://$PROJECT_DIR$/AlexWorld/AlexMUD.iml" filepath="$PROJECT_DIR$/AlexWorld/AlexMUD.iml" />
       <module fileurl="file://$PROJECT_DIR$/DefaultPlugin/DefaultPlugin.iml" filepath="$PROJECT_DIR$/DefaultPlugin/DefaultPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/MUDCartographer/MUDCartographer.iml" filepath="$PROJECT_DIR$/MUDCartographer/MUDCartographer.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6 (1)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="Regex">
@@ -313,17 +371,6 @@
   <component name="SQLPlugin.ProjectConfiguration">
     <queries />
   </component>
-  <component name="StarteamConfiguration">
-    <option name="SERVER" value="" />
-    <option name="PORT" value="49201" />
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="PROJECT" value="" />
-    <option name="VIEW" value="" />
-    <option name="ALTERNATIVE_WORKING_PATH" value="" />
-    <option name="LOCK_ON_CHECKOUT" value="false" />
-    <option name="UNLOCK_ON_CHECKIN" value="false" />
-  </component>
   <component name="Struts Assistant">
     <option name="showInputs" value="true" />
     <option name="resources">
@@ -340,7 +387,7 @@
     <option name="myReportErrorsAsWarnings" value="true" />
   </component>
   <component name="SvnBranchConfigurationManager">
-    <option name="myVersion" value="123" />
+    <option name="myVersion" value="124" />
   </component>
   <component name="SvnChangesBrowserSettings">
     <option name="USE_AUTHOR_FIELD" value="true" />
@@ -358,6 +405,7 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
+    <mapping directory="$PROJECT_DIR$/AlexMUD" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/MUDCartographer" vcs="svn" />
   </component>
   <component name="VssConfiguration">
@@ -411,11 +459,6 @@
   </component>
   <component name="com.intellij.profile.ui.ErrorOptionsConfigurable" proportions="0.16666667" version="1">
     <option name="myLastEditedConfigurable" value="Project Profiles" />
-  </component>
-  <component name="uidesigner-configuration">
-    <option name="INSTRUMENT_CLASSES" value="true" />
-    <option name="COPY_FORMS_RUNTIME_TO_OUTPUT" value="true" />
-    <option name="DEFAULT_LAYOUT_MANAGER" value="GridLayoutManager" />
   </component>
 </project>
 
