@@ -42,16 +42,19 @@ public class AMRoomInfoPanel extends RoomInfoPanel implements RoomEventListener 
 
     private Room room;
     private MudController controller;
-    private int ID;
 
-    private JTextField roomIdField;
-    private JTextField roomSymbolField;
-    private JButton textColorButton;
-    private JButton backgroundColorButton;
     private JLabel roomIdLabel = new JLabel("Room ID: ");
+    private JLabel roomNameLabel = new JLabel("Name: ");
     private JLabel roomSymbolLabel = new JLabel("Symbol: ");
     private JLabel roomTextColorLabel = new JLabel("Text: ");
     private JLabel roomBackgroundColorLabel = new JLabel("Background: ");
+
+    private JTextField roomIdField;
+    private JTextField roomNameField;
+    private JTextField roomSymbolField;
+    private JButton textColorButton;
+    private JButton backgroundColorButton;
+
 
     public AMRoomInfoPanel(){}
 
@@ -62,12 +65,10 @@ public class AMRoomInfoPanel extends RoomInfoPanel implements RoomEventListener 
         addActionListeners();
     }
 
-    /**
-     * Create all the components that are used on the room info panel
-     */
     public void createComponents(){
 
         roomIdLabel.setPreferredSize(LABEL_DIMENSION);
+        roomNameLabel.setPreferredSize(LABEL_DIMENSION);
         roomSymbolLabel.setPreferredSize(LABEL_DIMENSION);
         roomTextColorLabel.setPreferredSize(LABEL_DIMENSION);
         roomBackgroundColorLabel.setPreferredSize(LABEL_DIMENSION);
@@ -81,7 +82,6 @@ public class AMRoomInfoPanel extends RoomInfoPanel implements RoomEventListener 
 
         // create text fields
         roomIdField = new JTextField(10);
-        roomIdField.setEnabled(false);
 
         roomSymbolField = new JTextField(1);
     }
