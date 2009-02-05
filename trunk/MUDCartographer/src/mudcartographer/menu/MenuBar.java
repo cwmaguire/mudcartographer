@@ -20,9 +20,16 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar{
 
+    FileMenu fileMenu; 
+
     public void setup(){
 
-        this.add(new FileMenu());
+        fileMenu = new FileMenu();
+        this.add(fileMenu);
 
+    }
+
+    public void setIsEditing(boolean isEditing){
+        fileMenu.setIsEditing(isEditing);
     }
 }

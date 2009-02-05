@@ -77,6 +77,7 @@ public class MudMap{
     }
 
     public void setupInitialRoom(){
+        Room.resetRoomID();
         this.initialRoom = createRoomInstance();
         setCurrentRoom(initialRoom);
     }

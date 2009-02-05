@@ -39,7 +39,7 @@ public class SaveAsMenuItem extends JMenuItem {
                 fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPEG", "jpg"));
                 fileChooser.showSaveDialog(null);
                 File file = fileChooser.getSelectedFile();
-                System.out.println("File name is " + file.getName());
+                System.out.println("File name is " + (file == null ? "[null]" : file.getName()));
             }
         });
 

@@ -43,10 +43,11 @@ public class MudCartographer{
     private RoomInfoPanel roomInfoPanel;
     private RoomDescriptionPanel roomDescriptionPanel;
     private MenuBar menuBar;
+    private JPanel mainPanel;
 
     public static void main(String[] args){
         mudCartographer = new MudCartographer();
-        mudCartographer.load();
+        mudCartographer.load(null);
     }
 
     public JFrame getFrame() {
@@ -56,17 +57,28 @@ public class MudCartographer{
     /**
      * Load up the frame, controls and painter for a MudCartographer
      */
-    public void load(){
-        frame = createAndSetupFrame();
-        controller = MudController.getMudController();
+    public void load(Plugin plugin){
+        if(frame != null){
+            //frame.setVisible(false);
+            //frame = null;
+            frame.remove(mainPanel);
+        }else{
+            frame = createAndSetupFrame();
+            controller = MudController.getMudController();
+            frame.setJMenuBar(createMenu());
+        }
 
-        createMenu();
-
-        frame.setJMenuBar(menuBar);
-        frame.add(createAndAddEmptyMainPanel());
+        if(plugin == null){
+            frame.add(createAndAddEmptyMainPanel());
+            menuBar.setIsEditing(false);
+        }else{
+            loadPlugin(plugin);
+            menuBar.setIsEditing(true);
+        }
 
         frame.pack();
         frame.setVisible(true);
+        frame.repaint();
     }
 
     public void loadPlugin(Plugin plugin) {
@@ -127,13 +139,14 @@ public class MudCartographer{
         return painter;
     }
 
-    private void createMenu(){
+    private JMenuBar createMenu(){
         menuBar = new mudcartographer.menu.MenuBar();
         menuBar.setup();
+        return menuBar;
     }
 
     private JPanel createAndAddEmptyMainPanel(){
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         JLabel instructionLabel = new JLabel("Open a map or create a new map to start.");
 
         mainPanel.setLayout(new BorderLayout());
@@ -143,7 +156,7 @@ public class MudCartographer{
     }
 
     private JPanel createMainPanelAndAddSubPanels() {
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setFocusable(false);
         mainPanel.add(mapPainterScrollPane, BorderLayout.CENTER);
