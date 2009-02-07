@@ -18,7 +18,7 @@ package alexmud.gui;
 
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
-import mudcartographer.gui.RoomDescriptionPanel;
+import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
 
 import javax.swing.*;
@@ -31,9 +31,9 @@ import java.awt.event.ActionListener;
  * Handles creating and maintaining a panel to
  * display room descriptions
  */
-public class AMRoomDescriptionPanel extends RoomDescriptionPanel {
+public class AMRoomDescriptionPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80,20);
-    private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlag();
+    private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlagBits();
 
     private Room room;
     private MudController controller;

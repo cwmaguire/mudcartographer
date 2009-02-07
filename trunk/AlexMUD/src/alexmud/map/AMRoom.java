@@ -22,9 +22,6 @@ import mudcartographer.map.MudMap;
 import java.awt.*;
 
 public class AMRoom extends Room {
-    // ToDo: these will need to become functions of a zoom factor
-    //       when we add zooming.
-    //       Actually, we may be able to use a filter to do the scaling
     public static final int BOX_WIDTH_HEIGHT = 20;
     public static final int ARC_WIDTH_HEIGHT = 7;
     public static final int BOX_SPACING = BOX_WIDTH_HEIGHT;
@@ -39,36 +36,34 @@ public class AMRoom extends Room {
     private char symbol = 'a';
     // what was the ID of the last operation performed on this room
     private int currentOperationID;
-    private int ID;
+    private int ID = 0;
     private Rectangle rectangle;
     private Point point;
     private Color textColor = Color.BLACK;
     private Color backgroundColor = Color.WHITE;
     private boolean isChanged;
-    private String description;
+    private String description = "";
+    private String name = "";
+    private String terrain = "";
 
     public enum RoomProperty {
-        SYMBOL(1),
-        ID(2),
-        RECTANGLE(4),
-        POINT(8),
-        TEXT_COLOR(16),
-        BACKGROUND_COLOR(32),
-        DESCRIPTION(64),
-        PAINT(128);
+        SYMBOL,
+        ID,
+        RECTANGLE,
+        POINT,
+        TEXT_COLOR,
+        BACKGROUND_COLOR,
+        DESCRIPTION,
+        PAINT,
+        NAME,
+        TERRAIN;
 
-        private int flag;
-
-        RoomProperty(int flag) {
-            this.flag = flag;
+        public int getFlagBits(){
+            return (int) Math.pow(2, (this.ordinal() + 1));
         }
 
-        public int getFlag() {
-            return flag;
-        }
-
-        public static int getAll() {
-            return SYMBOL.getFlag() | ID.getFlag() | RECTANGLE.getFlag() | POINT.getFlag() | TEXT_COLOR.getFlag() | BACKGROUND_COLOR.getFlag() | DESCRIPTION.getFlag();
+        public static int getAll(){
+            return Integer.MAX_VALUE; // in binary this is many 1's
         }
     }
 
@@ -130,6 +125,22 @@ public class AMRoom extends Room {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTerrain() {
+        return terrain;
+    }
+
+    public void setTerrain(String terrain) {
+        this.terrain = terrain;
     }
 
     /**

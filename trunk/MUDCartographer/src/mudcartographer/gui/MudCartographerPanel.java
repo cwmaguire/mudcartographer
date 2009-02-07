@@ -16,7 +16,16 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.gui;
 
+import mudcartographer.MudController;
+import mudcartographer.event.RoomEventListener;
+
 import javax.swing.*;
 
-public class PluginChooser extends JDialog {
+/**
+ * Handles creating and maintaining a panel to
+ * display room descriptions
+ */
+public abstract class MudCartographerPanel extends JPanel implements RoomEventListener {
+
+    public abstract void initialize(MudController controller);
 }

@@ -50,7 +50,7 @@ public class MudMapKeyListener extends KeyAdapter{
         if(Character.isLetter(e.getKeyChar())){
             room = map.getCurrentRoom();
             room.setSymbol(e.getKeyChar());
-            property = RoomProperty.SYMBOL.getFlag();
+            property = RoomProperty.SYMBOL.getFlagBits();
         }else{
             room = map.selectOrCreateRoom(e);
             property = RoomProperty.getAll();

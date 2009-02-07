@@ -48,27 +48,21 @@ public abstract class Room{
     private String description;
 
     public enum RoomProperty{
-        SYMBOL(1),
-        ID(2),
-        RECTANGLE(4),
-        POINT(8),
-        TEXT_COLOR(16),
-        BACKGROUND_COLOR(32),
-        DESCRIPTION(64),
-        PAINT(128);
+        SYMBOL,
+        ID,
+        RECTANGLE,
+        POINT,
+        TEXT_COLOR,
+        BACKGROUND_COLOR,
+        DESCRIPTION,
+        PAINT;
 
-        private int flag;
-
-        RoomProperty(int flag){
-            this.flag = flag;
-        }
-
-        public int getFlag(){
-            return flag;
+        public int getFlagBits(){
+            return 2 ^ (this.ordinal() + 1);
         }
 
         public static int getAll(){
-            return SYMBOL.getFlag() | ID.getFlag() | RECTANGLE.getFlag() | POINT.getFlag() | TEXT_COLOR.getFlag() | BACKGROUND_COLOR.getFlag() | DESCRIPTION.getFlag();
+            return Integer.MAX_VALUE; // in binary this is many 1's
         }
     }
 
@@ -97,7 +91,7 @@ public abstract class Room{
     public void setRoom(Room r, MudMap.Direction d){
         rooms[d.ordinal()] = r;
     }
-
+    
     public char getSymbol(){
         return symbol;
     }

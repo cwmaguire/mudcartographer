@@ -45,4 +45,8 @@ public class DefaultPlugin implements Plugin {
     public FileWriter getFileWriter() {
         return new DefaultWriter();
     }
+
+    public void setup(){
+        
+    }
 }
