@@ -19,7 +19,7 @@ import mudcartographer.event.RoomEvent;
 import mudcartographer.gui.MapPainter;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.MudMap;
-import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 import mudcartographer.menu.MenuBar;
 import mudcartographer.plugin.Plugin;
 
@@ -167,12 +167,12 @@ public class MudCartographer{
     }
 
     private void fireInitialRoomEvent() {
-        controller.fireRoomEvent(new RoomEvent(map.getCurrentRoom(), Room.RoomProperty.getAll(), this));
+        controller.fireRoomEvent(new RoomEvent(map.getCurrentRoom(), RoomProperty.getAll(), this));
     }
 
     private void setupEventListeners() {
-        controller.addListener(roomInfoPanel);
-        controller.addListener(roomDescriptionPanel);
+        controller.addListeners(roomInfoPanel.getListeners());
+        controller.addListeners(roomDescriptionPanel.getListeners());
     }
 
     public MudMap getMudMap(){

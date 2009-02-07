@@ -18,10 +18,14 @@ package alexmud.gui;
 
 import alexmud.map.AMRoom;
 import mudcartographer.MudController;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles creating and maintaining a panel to
@@ -32,7 +36,6 @@ import javax.swing.*;
 public class AMRoomInfoPanel extends MudCartographerPanel {
     private static int ROOM_PROPERTIES = AMRoomGeneralInfoPanel.ROOM_PROPERTIES | AMRoomFlagPanel.ROOM_PROPERTIES;
 
-    private AMRoom room;
     private MudController controller;
     private MudCartographerPanel infoPanel;
     private MudCartographerPanel flagPanel;
@@ -47,6 +50,8 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
     }
 
     public void setupComponents(){
+        this.setLayout(new BorderLayout());
+
         infoPanel = new AMRoomGeneralInfoPanel();
         flagPanel = new AMRoomFlagPanel();
 
@@ -56,14 +61,28 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Info", infoPanel);
         tabbedPane.add("Flags", flagPanel);
-        this.add(tabbedPane);
+        
+        this.add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    public List<RoomEventListener> getListeners(){
+        List<RoomEventListener> listeners = infoPanel.getListeners();
+        List<RoomEventListener> listeners2 = flagPanel.getListeners();
+        
+        List<RoomEventListener> allListeners = new ArrayList<RoomEventListener>();
+        for(RoomEventListener listener : listeners){
+            allListeners.add(listener);
+        }
+        for(RoomEventListener listener : listeners2){
+            allListeners.add(listener);
+        }
+        return allListeners;
     }
 
     public void updateRoom(Room room){
         if(!(room instanceof AMRoom)){
             return;
         }
-        this.room = (AMRoom) room;
         infoPanel.updateRoom(room);
         flagPanel.updateRoom(room);
     }

@@ -16,8 +16,9 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
-import mudcartographer.plugin.PluginImpl;
 import mudcartographer.MudCartographer;
+import mudcartographer.map.Room;
+import mudcartographer.plugin.PluginImpl;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,7 @@ public class NewMenuItem extends JMenuItem {
 
         addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Room.resetRoomID();
                 MudCartographer.mudCartographer.load(pluginImpl.getPlugin());
             }
         });

@@ -20,169 +20,107 @@ package alexmud.gui;
 import alexmud.map.AMRoom;
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class AMRoomFlagPanel extends MudCartographerPanel {
-    private static Dimension LABEL_DIMENSION = new Dimension(80,20);
+    private static Dimension LABEL_DIMENSION = new Dimension(50,20);
     private static Dimension COLOR_LABEL_DIMENSION = new Dimension(20, 20);
-    public static int ROOM_PROPERTIES = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
-                                         Room.RoomProperty.ID.getFlagBits() |
-                                         Room.RoomProperty.SYMBOL.getFlagBits();
+    public static int ROOM_PROPERTIES = RoomProperty.FLAGS.getFlagBits();
 
     private AMRoom room;
     private MudController controller;
 
-    private JLabel roomIdLabel = new JLabel("Room ID: ");
-    private JLabel roomNameLabel = new JLabel("Name: ");
-    private JLabel roomSymbolLabel = new JLabel("Symbol: ");
-    private JLabel roomColorLabel = new JLabel("Color: ");
-    private JLabel roomTextColorLabel = new JLabel("fg: ");
-    private JLabel roomBackgroundColorLabel = new JLabel("bg: ");
-    private JLabel roomTerrainLabel = new JLabel("Terrain: ");
-
-    private JTextField roomIdField;
-    private JTextField roomNameField;
-    private JTextField roomSymbolField;
-
-    private JButton textColorButton;
-    private JButton backgroundColorButton;
-
+    private List<String> flags = Arrays.asList("DARK", "SAFE", "FALL-TRAP", "INDOORS", "NO-SUMMON", "S-ENCOUNTER", "E-ENCOUNTER", "P-ENCOUNTER",
+                                                    "HAS-LIGHT", "PRIVATE", "SUN-LIGHT", "NO-MAGIC", "RESTRICTED", "SOUNDPROOF", "NO-SLEEP",
+                                                    "DANGEROUS", "PRISON", "WILDERNESS", "WATER", "SALTWATER", "POISONED", "BUSY", "NO-PURGE",
+                                                    "ARENA", "TELEPORT", "SAVES");
 
     public void initialize(MudController controller) {
         this.controller = controller;
         createFlagTabComponents();
-        sizeFlagTabComponents();
-        layoutFlagTabComponents();
-        addFlagTabPanelActionListeners();
     }
 
     private void createFlagTabComponents() {
-        // create colour labels
-        textColorButton = new JButton();
-        backgroundColorButton = new JButton("");
+        JCheckBox flagCheckbox;
+        JLabel flagLabel;
+        String flag;
+        int gridx = 0;
+        int gridy = 0;
 
-        // create text fields
-        roomIdField = new JTextField(10);
-        roomSymbolField = new JTextField(1);
-    }
-
-    private void sizeFlagTabComponents() {
-        roomIdLabel.setPreferredSize(LABEL_DIMENSION);
-        roomNameLabel.setPreferredSize(LABEL_DIMENSION);
-        roomSymbolLabel.setPreferredSize(LABEL_DIMENSION);
-        roomTextColorLabel.setPreferredSize(LABEL_DIMENSION);
-        roomBackgroundColorLabel.setPreferredSize(LABEL_DIMENSION);
-        textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
-        backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
-    }
-
-    private void layoutFlagTabComponents(){
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         c.anchor = GridBagConstraints.FIRST_LINE_START;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(20, 10, 0, 0);
-        this.add(roomIdLabel, c);
 
-        c.gridx = 1;
-        c.gridy = 0;
-        c.insets.set(20, 0, 0, 20);
-        //c.weightx = 1.0;
-        this.add(roomIdField, c);
+        for (String flag1 : flags) {
+            flag = flag1;
 
-        c.gridx = 0;
-        c.gridy = 1;
-        c.insets.set(5,10,0,0);
-        this.add(roomSymbolLabel, c);
+            c.gridx = gridx % 4;
+            c.gridy = gridy / 2;
+            c.insets = new Insets(5, 0, 0, 0);
 
-        c.gridx = 1;
-        c.gridy = 1;
-        c.insets.set(5,0,0,20);
-        this.add(roomSymbolField, c);
+            flagLabel = new JLabel(flag);
+            flagLabel.setPreferredSize(LABEL_DIMENSION);
+            this.add(flagLabel, c);
 
-        c.gridx = 0;
-        c.gridy = 2;
-        c.insets.set(5,10,0,0);
-        this.add(roomTextColorLabel, c);
+            gridx++;
 
-        c.gridx = 1;
-        c.gridy = 2;
-        c.insets.set(5,0,0,20);
-        this.add(textColorButton, c);
 
-        c.gridx = 0;
-        c.gridy = 3;
-        c.insets.set(5, 10, 0, 0);
-        this.add(roomBackgroundColorLabel, c);
+            c.gridx = gridx % 4;
+            c.gridy = gridy / 2;
+            c.insets = new Insets(5, 0, 0, 10);
 
-        c.gridx = 1;
-        c.gridy = 3;
-        c.insets.set(5, 0, 0, 20);
-        this.add(backgroundColorButton, c);
+            flagCheckbox = new JCheckBox();
+            flagCheckbox.setName(flag);
+            flagCheckbox.addChangeListener(new CheckboxChangeListener());
+            this.add(flagCheckbox, c);
+
+            gridx++;
+            gridy++;
+        }
 
         // create a final, empty panel to take up all the remaining space
         c.gridx = 0;
-        c.gridy = 4;
-        c.gridwidth = 2;
+        c.gridy = gridy;
+        c.gridwidth = 4;
         c.weighty = 1.0;
         this.add(new JPanel(), c);
     }
 
-    private void addFlagTabPanelActionListeners(){
-        // user shouldn't have to select the char
-        roomSymbolField.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                super.mouseClicked(e);
-                roomSymbolField.selectAll();
-            }
-        });
-
-        roomSymbolField.addKeyListener(new KeyAdapter(){
-            public void keyTyped(KeyEvent e){
-                room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
-                controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.SYMBOL.getFlagBits(), AMRoomFlagPanel.this));
-            }
-        });
-
-        textColorButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                Color newColor = JColorChooser.showDialog(AMRoomFlagPanel.this, "Choose text Color", textColorButton.getBackground());
-                if(newColor != null){
-                    textColorButton.setBackground(newColor);
-                    room.setTextColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.TEXT_COLOR.getFlagBits(), AMRoomFlagPanel.this));
-                }
-            }
-        });
-
-        backgroundColorButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                Color newColor = JColorChooser.showDialog(AMRoomFlagPanel.this, "Choose text Color", backgroundColorButton.getBackground());
-                if(newColor != null){
-                    backgroundColorButton.setBackground(newColor);
-                    room.setBackgroundColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.BACKGROUND_COLOR.getFlagBits(), AMRoomFlagPanel.this));
-                }
-            }
-        });
+    private class CheckboxChangeListener implements ChangeListener {
+        public void stateChanged(ChangeEvent e) {
+            JCheckBox checkbox = (JCheckBox) e.getSource();
+            room.setFlag(checkbox.getName(), checkbox.isSelected());
+            controller.fireRoomEvent(new RoomEvent(room, RoomProperty.FLAGS.getFlagBits(), AMRoomFlagPanel.this));
+            controller.releaseFocus();
+        }
     }
+
+    public java.util.List<RoomEventListener> getListeners() {
+        return Arrays.asList((RoomEventListener) this);
+    }
+
     public void updateRoom(Room room){
         if(!(room instanceof AMRoom)){
             return;
         }
         this.room = (AMRoom) room;
-        roomIdField.setText(String.valueOf(room.getID()));
-        roomSymbolField.setText(String.valueOf(room.getSymbol()));
-        textColorButton.setBackground(room.getTextColor());
-        backgroundColorButton.setBackground(room.getBackgroundColor());
+
+        for(Component component : this.getComponents()){
+            if(component instanceof JCheckBox){
+                ((JCheckBox) component).setSelected(this.room.isFlagSet(component.getName()));
+            }
+        }
     }
 
     public int getRelevantRoomEventFlags() {

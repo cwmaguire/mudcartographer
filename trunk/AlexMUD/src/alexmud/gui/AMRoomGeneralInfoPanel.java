@@ -21,20 +21,23 @@ import alexmud.constants.ExternalConstants;
 import alexmud.map.AMRoom;
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80,20);
     private static Dimension COLOR_LABEL_DIMENSION = new Dimension(20, 20);
-    public static int ROOM_PROPERTIES = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
-                                         Room.RoomProperty.ID.getFlagBits() |
-                                         Room.RoomProperty.SYMBOL.getFlagBits();
+    public static int ROOM_PROPERTIES = RoomProperty.BACKGROUND_COLOR.getFlagBits() |
+                                         RoomProperty.TEXT_COLOR.getFlagBits() |
+                                         RoomProperty.ID.getFlagBits() |
+                                         RoomProperty.SYMBOL.getFlagBits();
 
     private AMRoom room;
     private MudController controller;
@@ -42,7 +45,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     private JLabel roomIdLabel = new JLabel("Room ID: ");
     private JLabel roomNameLabel = new JLabel("Name: ");
     private JLabel roomSymbolLabel = new JLabel("Symbol: ");
-    private JLabel roomColorLabel = new JLabel("Color: ");
+    //private JLabel roomColorLabel = new JLabel("Color: ");
     private JLabel roomTextColorLabel = new JLabel("fg: ");
     private JLabel roomBackgroundColorLabel = new JLabel("bg: ");
     private JLabel roomTerrainLabel = new JLabel("Terrain: ");
@@ -161,37 +164,38 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     }
 
     private void addGeneralTabPanelActionListeners(){
-        // user shouldn't have to select the char
-        roomIdField.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                super.mouseClicked(e);
-                roomIdField.selectAll();
-            }
-        });
 
         roomIdField.addKeyListener(new KeyAdapter(){
             int newRoomID;
-            public void keyTyped(KeyEvent e){
-                try{
-                    newRoomID = Integer.parseInt(roomIdField.getText());
-                }catch(NumberFormatException nfe){
-                    JOptionPane.showMessageDialog(AMRoomGeneralInfoPanel.this, "Room ID must be an integer", "Invalid Room ID", JOptionPane.ERROR_MESSAGE);
-                    roomIdField.setText("0");
-                    return;
-                }
-                if(room.getID() != newRoomID){
-                    room.setID(newRoomID);
-                    controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.ID.getFlagBits(), AMRoomGeneralInfoPanel.this));
+            public void keyReleased(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    try{
+                        newRoomID = Integer.parseInt(roomIdField.getText());
+                    }catch(NumberFormatException nfe){
+                        JOptionPane.showMessageDialog(AMRoomGeneralInfoPanel.this, "Room ID must be an integer", "Invalid Room ID", JOptionPane.ERROR_MESSAGE);
+                        roomIdField.setText("0");
+                        return;
+                    }
+                    if(room.getID() != newRoomID){
+                        room.setID(newRoomID);
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.ID.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                    }
+
+                    controller.releaseFocus();
                 }
             }
         });
 
         roomNameField.addKeyListener(new KeyAdapter(){
-            public void keyTyped(KeyEvent e){
-                String newRoomName = roomNameField.getText();
-                if(!newRoomName.equals(room.getName())){
-                    room.setName(newRoomName);
-                    controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.NAME.getFlagBits(), AMRoomGeneralInfoPanel.this));
+            public void keyReleased(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    String newRoomName = roomNameField.getText();
+                    if(!newRoomName.equals(room.getName())){
+                        room.setName(newRoomName);
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.NAME.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                    }
+
+                    controller.releaseFocus();
                 }
             }
         });
@@ -207,7 +211,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomSymbolField.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
-                controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.SYMBOL.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                controller.fireRoomEvent(new RoomEvent(room, RoomProperty.SYMBOL.getFlagBits(), AMRoomGeneralInfoPanel.this));
             }
         });
 
@@ -217,7 +221,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 if(newColor != null){
                     textColorButton.setBackground(newColor);
                     room.setTextColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.TEXT_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TEXT_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
             }
         });
@@ -228,22 +232,27 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 if(newColor != null){
                     backgroundColorButton.setBackground(newColor);
                     room.setBackgroundColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.BACKGROUND_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.BACKGROUND_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
             }
         });
 
-        roomTerrainComboBox.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) {
+        roomTerrainComboBox.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
                 String newRoomTerrain = (String) roomTerrainComboBox.getSelectedItem();
 
                 if(!newRoomTerrain.equals(room.getTerrain())){
                     room.setTerrain(newRoomTerrain);
-                    controller.fireRoomEvent(new RoomEvent(room, AMRoom.RoomProperty.TERRAIN.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TERRAIN.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
 
+                controller.releaseFocus();
             }
         });
+    }
+
+    public java.util.List<RoomEventListener> getListeners() {
+        return Arrays.asList((RoomEventListener) this);
     }
 
     public void updateRoom(Room room){

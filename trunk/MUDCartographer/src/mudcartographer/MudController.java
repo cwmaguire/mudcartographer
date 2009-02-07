@@ -20,6 +20,7 @@ import mudcartographer.event.RoomEvent;
 import mudcartographer.event.RoomEventListener;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,6 +61,20 @@ public class MudController{
             if(!listener.equals(roomEvent.getSource()) && (roomEvent.getProperties() & listener.getRelevantRoomEventFlags()) > 0){
                 listener.updateRoom(roomEvent.getRoom());
             }
+        }
+    }
+
+    public void releaseFocus(){
+        for(RoomEventListener listener : listeners){
+           if(listener.takeFocus()){
+               return;
+            }
+        }
+    }
+
+    public void addListeners(List<RoomEventListener> listeners){
+        for(RoomEventListener listener : listeners){
+            addListener(listener);
         }
     }
 

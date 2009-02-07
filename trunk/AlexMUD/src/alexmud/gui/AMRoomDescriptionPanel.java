@@ -18,14 +18,17 @@ package alexmud.gui;
 
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 /**
  * Handles creating and maintaining a panel to
@@ -33,7 +36,7 @@ import java.awt.event.ActionListener;
  */
 public class AMRoomDescriptionPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80,20);
-    private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlagBits();
+    private static int ROOM_PROPERTIES = RoomProperty.DESCRIPTION.getFlagBits();
 
     private Room room;
     private MudController controller;
@@ -122,6 +125,10 @@ public class AMRoomDescriptionPanel extends MudCartographerPanel {
                 }
             }
         });
+    }
+
+    public java.util.List<RoomEventListener> getListeners() {
+        return Arrays.asList((RoomEventListener) this);
     }
 
     public void updateRoom(Room room) {
