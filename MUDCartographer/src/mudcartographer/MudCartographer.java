@@ -17,8 +17,7 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 
 import mudcartographer.event.RoomEvent;
 import mudcartographer.gui.MapPainter;
-import mudcartographer.gui.RoomDescriptionPanel;
-import mudcartographer.gui.RoomInfoPanel;
+import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.MudMap;
 import mudcartographer.map.Room;
 import mudcartographer.menu.MenuBar;
@@ -40,8 +39,8 @@ public class MudCartographer{
     private MudMap map;
     private MudController controller;
     private JScrollPane mapPainterScrollPane;
-    private RoomInfoPanel roomInfoPanel;
-    private RoomDescriptionPanel roomDescriptionPanel;
+    private MudCartographerPanel roomInfoPanel;
+    private MudCartographerPanel roomDescriptionPanel;
     private MenuBar menuBar;
     private JPanel mainPanel;
 
@@ -73,6 +72,7 @@ public class MudCartographer{
             frame.add(createAndAddEmptyMainPanel());
             menuBar.setIsEditing(false);
         }else{
+            plugin.setup();
             loadPlugin(plugin);
             menuBar.setIsEditing(true);
         }
@@ -117,8 +117,8 @@ public class MudCartographer{
     private void createSubPanels(Plugin plugin) {
         createMapPainterScrollPane();
         try{
-            roomInfoPanel = (RoomInfoPanel) plugin.getRoomInfoPanelClass().newInstance();
-            roomDescriptionPanel = (RoomDescriptionPanel) plugin.getRoomDescriptionPanelClass().newInstance();
+            roomInfoPanel = (MudCartographerPanel) plugin.getRoomInfoPanelClass().newInstance();
+            roomDescriptionPanel = (MudCartographerPanel) plugin.getRoomDescriptionPanelClass().newInstance();
         }catch(Exception e){
 
             e.printStackTrace();

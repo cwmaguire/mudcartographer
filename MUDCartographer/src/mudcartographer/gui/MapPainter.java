@@ -34,12 +34,12 @@ import mudcartographer.MudController;
  */
 public class MapPainter extends JComponent implements Scrollable, RoomEventListener {
     private static int NEXT_ID;
-    private static int RELEVANT_ROOM_EVENT_FLAGS = Room.RoomProperty.BACKGROUND_COLOR.getFlag() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlag() |
-                                         Room.RoomProperty.SYMBOL.getFlag() |
-                                         Room.RoomProperty.PAINT.getFlag() |
+    private static int RELEVANT_ROOM_EVENT_FLAGS = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
+                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
+                                         Room.RoomProperty.SYMBOL.getFlagBits() |
+                                         Room.RoomProperty.PAINT.getFlagBits() |
                                          // we need to grab focus after the description has been "saved"
-                                         Room.RoomProperty.DESCRIPTION.getFlag();
+                                         Room.RoomProperty.DESCRIPTION.getFlagBits();
 
     private MudMap map;
     private BufferedImage buff;

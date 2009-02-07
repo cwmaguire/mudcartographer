@@ -16,6 +16,7 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alexmud.plugin;
 
+import alexmud.constants.ExternalConstants;
 import alexmud.file.reader.AMReader;
 import alexmud.file.writer.AMWriter;
 import alexmud.gui.AMRoomDescriptionPanel;
@@ -44,5 +45,9 @@ public class AlexMUDMapPlugin implements Plugin {
 
     public FileWriter getFileWriter() {
         return new AMWriter();
+    }
+
+    public void setup(){
+        ExternalConstants.load();
     }
 }

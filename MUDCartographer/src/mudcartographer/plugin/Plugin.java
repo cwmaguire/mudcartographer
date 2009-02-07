@@ -25,4 +25,5 @@ public interface Plugin {
     public Class getRoomClass();
     public FileReader getFileReader();
     public FileWriter getFileWriter();
+    public void setup();
 }

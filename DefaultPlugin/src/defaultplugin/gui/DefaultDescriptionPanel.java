@@ -18,7 +18,7 @@ package defaultplugin.gui;
 
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
-import mudcartographer.gui.RoomDescriptionPanel;
+import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
 
 import javax.swing.*;
@@ -27,9 +27,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DefaultDescriptionPanel extends RoomDescriptionPanel {
+public class DefaultDescriptionPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80, 20);
-    private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlag();
+    private static int ROOM_PROPERTIES = Room.RoomProperty.DESCRIPTION.getFlagBits();
 
     private Room room;
     private MudController controller;

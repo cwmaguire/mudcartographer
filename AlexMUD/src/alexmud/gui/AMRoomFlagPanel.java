@@ -14,81 +14,75 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.gui;
 
-import mudcartographer.event.RoomEventListener;
-import mudcartographer.map.Room;
+package alexmud.gui;
+
+import alexmud.map.AMRoom;
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
+import mudcartographer.gui.MudCartographerPanel;
+import mudcartographer.map.Room;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Handles creating and maintaining a panel to
- * display room information
- *
- * NOT THREAD SAFE
- */
-public class RoomInfoPanel extends JPanel implements RoomEventListener {
+public class AMRoomFlagPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80,20);
     private static Dimension COLOR_LABEL_DIMENSION = new Dimension(20, 20);
-    private static int ROOM_PROPERTIES = Room.RoomProperty.BACKGROUND_COLOR.getFlag() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlag() |
-                                         Room.RoomProperty.ID.getFlag() |
-                                         Room.RoomProperty.SYMBOL.getFlag();
+    public static int ROOM_PROPERTIES = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
+                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
+                                         Room.RoomProperty.ID.getFlagBits() |
+                                         Room.RoomProperty.SYMBOL.getFlagBits();
 
-    private Room room;
+    private AMRoom room;
     private MudController controller;
-    private int ID;
+
+    private JLabel roomIdLabel = new JLabel("Room ID: ");
+    private JLabel roomNameLabel = new JLabel("Name: ");
+    private JLabel roomSymbolLabel = new JLabel("Symbol: ");
+    private JLabel roomColorLabel = new JLabel("Color: ");
+    private JLabel roomTextColorLabel = new JLabel("fg: ");
+    private JLabel roomBackgroundColorLabel = new JLabel("bg: ");
+    private JLabel roomTerrainLabel = new JLabel("Terrain: ");
 
     private JTextField roomIdField;
+    private JTextField roomNameField;
     private JTextField roomSymbolField;
+
     private JButton textColorButton;
     private JButton backgroundColorButton;
-    private JLabel roomIdLabel = new JLabel("Room ID: ");
-    private JLabel roomSymbolLabel = new JLabel("Symbol: ");
-    private JLabel roomTextColorLabel = new JLabel("Text: ");
-    private JLabel roomBackgroundColorLabel = new JLabel("Background: ");
 
-    public RoomInfoPanel(){}
 
-    public void initialize(MudController controller){
+    public void initialize(MudController controller) {
         this.controller = controller;
-        createComponents();
-        layoutComponents();
-        addActionListeners();
+        createFlagTabComponents();
+        sizeFlagTabComponents();
+        layoutFlagTabComponents();
+        addFlagTabPanelActionListeners();
     }
 
-    /**
-     * Create all the components that are used on the room info panel
-     */
-    public void createComponents(){
-
-        roomIdLabel.setPreferredSize(LABEL_DIMENSION);
-        roomSymbolLabel.setPreferredSize(LABEL_DIMENSION);
-        roomTextColorLabel.setPreferredSize(LABEL_DIMENSION);
-        roomBackgroundColorLabel.setPreferredSize(LABEL_DIMENSION);
-
+    private void createFlagTabComponents() {
         // create colour labels
         textColorButton = new JButton();
-        textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
-
         backgroundColorButton = new JButton("");
-        backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
 
         // create text fields
         roomIdField = new JTextField(10);
-        roomIdField.setEnabled(false);
-
         roomSymbolField = new JTextField(1);
     }
 
-    /**
-     * Layout the info panel components
-     */
-    private void layoutComponents(){
+    private void sizeFlagTabComponents() {
+        roomIdLabel.setPreferredSize(LABEL_DIMENSION);
+        roomNameLabel.setPreferredSize(LABEL_DIMENSION);
+        roomSymbolLabel.setPreferredSize(LABEL_DIMENSION);
+        roomTextColorLabel.setPreferredSize(LABEL_DIMENSION);
+        roomBackgroundColorLabel.setPreferredSize(LABEL_DIMENSION);
+        textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
+        backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
+    }
+
+    private void layoutFlagTabComponents(){
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -142,10 +136,7 @@ public class RoomInfoPanel extends JPanel implements RoomEventListener {
         this.add(new JPanel(), c);
     }
 
-    /**
-     * Add the action listeners that register when the user has done something or changed something
-     */
-    private void addActionListeners(){
+    private void addFlagTabPanelActionListeners(){
         // user shouldn't have to select the char
         roomSymbolField.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
@@ -157,63 +148,46 @@ public class RoomInfoPanel extends JPanel implements RoomEventListener {
         roomSymbolField.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
-                controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.SYMBOL.getFlag(), RoomInfoPanel.this));
+                controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.SYMBOL.getFlagBits(), AMRoomFlagPanel.this));
             }
         });
 
         textColorButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Color newColor = JColorChooser.showDialog(RoomInfoPanel.this, "Choose text Color", textColorButton.getBackground());
+                Color newColor = JColorChooser.showDialog(AMRoomFlagPanel.this, "Choose text Color", textColorButton.getBackground());
                 if(newColor != null){
                     textColorButton.setBackground(newColor);
                     room.setTextColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.TEXT_COLOR.getFlag(), RoomInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.TEXT_COLOR.getFlagBits(), AMRoomFlagPanel.this));
                 }
             }
         });
 
         backgroundColorButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                Color newColor = JColorChooser.showDialog(RoomInfoPanel.this, "Choose text Color", backgroundColorButton.getBackground());
+                Color newColor = JColorChooser.showDialog(AMRoomFlagPanel.this, "Choose text Color", backgroundColorButton.getBackground());
                 if(newColor != null){
                     backgroundColorButton.setBackground(newColor);
                     room.setBackgroundColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.BACKGROUND_COLOR.getFlag(), RoomInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.BACKGROUND_COLOR.getFlagBits(), AMRoomFlagPanel.this));
                 }
             }
         });
     }
-
-    /**
-     * Facade method for setting all the information
-     * in the room info panel
-     *
-     * @param room the room to update the info panel with
-     */
     public void updateRoom(Room room){
-        this.room = room;
+        if(!(room instanceof AMRoom)){
+            return;
+        }
+        this.room = (AMRoom) room;
         roomIdField.setText(String.valueOf(room.getID()));
         roomSymbolField.setText(String.valueOf(room.getSymbol()));
         textColorButton.setBackground(room.getTextColor());
         backgroundColorButton.setBackground(room.getBackgroundColor());
     }
 
-    public int getRelevantRoomEventFlags(){
-        return ROOM_PROPERTIES;
+    public int getRelevantRoomEventFlags() {
+        return ROOM_PROPERTIES; 
     }
 
-    /**
-     * Painter is the only one with the graphics object, so
-     * we'll tell painter to repaint the room
-     */
-    /*
-    private void repaintRoom(){
-        // give the focus back to the painter so the user doesn't wonder why
-        // key strokes aren't registering anymore
-        painter.requestFocus();
-        painter.repaint();
-    }
-    */
-    // The controller will do this
 
 }
