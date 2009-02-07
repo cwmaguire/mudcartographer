@@ -46,31 +46,6 @@ public class DefaultRoom extends Room { // ToDo: these will need to become funct
     private boolean isChanged;
     private String description;
 
-    public enum RoomProperty {
-        SYMBOL(1),
-        ID(2),
-        RECTANGLE(4),
-        POINT(8),
-        TEXT_COLOR(16),
-        BACKGROUND_COLOR(32),
-        DESCRIPTION(64),
-        PAINT(128);
-
-        private int flag;
-
-        RoomProperty(int flag) {
-            this.flag = flag;
-        }
-
-        public int getFlag() {
-            return flag;
-        }
-
-        public static int getAll() {
-            return SYMBOL.getFlag() | ID.getFlag() | RECTANGLE.getFlag() | POINT.getFlag() | TEXT_COLOR.getFlag() | BACKGROUND_COLOR.getFlag() | DESCRIPTION.getFlag();
-        }
-    }
-
     public DefaultRoom() {
         this(DEFAULT_SYMBOL);
     }

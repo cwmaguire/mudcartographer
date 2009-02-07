@@ -16,7 +16,12 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.gui;
 
+import mudcartographer.MudController;
+import mudcartographer.event.MudMapKeyListener;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,22 +29,17 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-import mudcartographer.event.RoomEventListener;
-import mudcartographer.event.MudMapKeyListener;
-import mudcartographer.map.Room;
-import mudcartographer.MudController;
-
 /**
  * Paints a MUD Map by drawing it's rooms and connections
  */
 public class MapPainter extends JComponent implements Scrollable, RoomEventListener {
     private static int NEXT_ID;
-    private static int RELEVANT_ROOM_EVENT_FLAGS = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
-                                         Room.RoomProperty.SYMBOL.getFlagBits() |
-                                         Room.RoomProperty.PAINT.getFlagBits() |
+    private static int RELEVANT_ROOM_EVENT_FLAGS = RoomProperty.BACKGROUND_COLOR.getFlagBits() |
+                                         RoomProperty.TEXT_COLOR.getFlagBits() |
+                                         RoomProperty.SYMBOL.getFlagBits() |
+                                         RoomProperty.PAINT.getFlagBits() |
                                          // we need to grab focus after the description has been "saved"
-                                         Room.RoomProperty.DESCRIPTION.getFlagBits();
+                                         RoomProperty.DESCRIPTION.getFlagBits();
 
     private MudMap map;
     private BufferedImage buff;
@@ -371,6 +371,11 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
 
     public int getRelevantRoomEventFlags(){
         return RELEVANT_ROOM_EVENT_FLAGS;
+    }
+
+    public boolean takeFocus(){
+        this.requestFocus();
+        return true;
     }
 
     public void updateRoom(Room room){

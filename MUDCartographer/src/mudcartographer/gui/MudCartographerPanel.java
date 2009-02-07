@@ -20,6 +20,7 @@ import mudcartographer.MudController;
 import mudcartographer.event.RoomEventListener;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Handles creating and maintaining a panel to
@@ -28,4 +29,10 @@ import javax.swing.*;
 public abstract class MudCartographerPanel extends JPanel implements RoomEventListener {
 
     public abstract void initialize(MudController controller);
+
+    public abstract List<RoomEventListener> getListeners();
+
+    public boolean takeFocus(){
+        return false;
+    }
 }

@@ -14,14 +14,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.event;
 
-import mudcartographer.map.Room;
+package mudcartographer.map;
 
-public interface RoomEventListener{
-    public int getRelevantRoomEventFlags();
+public enum RoomProperty {
+        SYMBOL,
+        ID,
+        RECTANGLE,
+        POINT,
+        TEXT_COLOR,
+        BACKGROUND_COLOR,
+        DESCRIPTION,
+        PAINT,
+        NAME,
+        TERRAIN,
+        FLAGS;
 
-    public void updateRoom(Room room);
+        public int getFlagBits(){
+            return (int) Math.pow(2, (this.ordinal() + 1));
+        }
 
-    public boolean takeFocus();
-}
+        public static int getAll(){
+            return Integer.MAX_VALUE; // in binary this is many 1's
+        }
+    }

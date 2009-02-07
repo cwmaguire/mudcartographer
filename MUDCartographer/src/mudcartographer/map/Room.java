@@ -47,24 +47,6 @@ public abstract class Room{
     private boolean isChanged;
     private String description;
 
-    public enum RoomProperty{
-        SYMBOL,
-        ID,
-        RECTANGLE,
-        POINT,
-        TEXT_COLOR,
-        BACKGROUND_COLOR,
-        DESCRIPTION,
-        PAINT;
-
-        public int getFlagBits(){
-            return 2 ^ (this.ordinal() + 1);
-        }
-
-        public static int getAll(){
-            return Integer.MAX_VALUE; // in binary this is many 1's
-        }
-    }
 
     public Room(){
         this(DEFAULT_SYMBOL);
@@ -74,7 +56,7 @@ public abstract class Room{
         this.symbol = symbol;
         this.ID = useID();
     }
-    
+
     public static void resetRoomID(){
         nextID = 0;
     }
@@ -91,7 +73,7 @@ public abstract class Room{
     public void setRoom(Room r, MudMap.Direction d){
         rooms[d.ordinal()] = r;
     }
-    
+
     public char getSymbol(){
         return symbol;
     }

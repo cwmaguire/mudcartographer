@@ -16,10 +16,12 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alexmud.map;
 
-import mudcartographer.map.Room;
 import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AMRoom extends Room {
     public static final int BOX_WIDTH_HEIGHT = 20;
@@ -33,6 +35,7 @@ public class AMRoom extends Room {
     public static int nextID;
     // use the Direction enum to get the ordinals into the array of rooms
     private Room[] rooms = new Room[10];
+    private Map<String, Boolean> flags = new HashMap<String, Boolean>();
     private char symbol = 'a';
     // what was the ID of the last operation performed on this room
     private int currentOperationID;
@@ -45,27 +48,6 @@ public class AMRoom extends Room {
     private String description = "";
     private String name = "";
     private String terrain = "";
-
-    public enum RoomProperty {
-        SYMBOL,
-        ID,
-        RECTANGLE,
-        POINT,
-        TEXT_COLOR,
-        BACKGROUND_COLOR,
-        DESCRIPTION,
-        PAINT,
-        NAME,
-        TERRAIN;
-
-        public int getFlagBits(){
-            return (int) Math.pow(2, (this.ordinal() + 1));
-        }
-
-        public static int getAll(){
-            return Integer.MAX_VALUE; // in binary this is many 1's
-        }
-    }
 
     public AMRoom() {
         this(DEFAULT_SYMBOL);
@@ -88,6 +70,14 @@ public class AMRoom extends Room {
 
     public void setRoom(Room r, MudMap.Direction d) {
         rooms[d.ordinal()] = r;
+    }
+
+    public boolean isFlagSet(String flagName){
+        return(flags.get(flagName) != null && flags.get(flagName));
+    }
+
+    public void setFlag(String flagName, boolean isSet){
+        flags.put(flagName, isSet);
     }
 
     public char getSymbol() {

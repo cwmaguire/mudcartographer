@@ -16,15 +16,13 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.event;
 
-import static mudcartographer.map.Room.RoomProperty;
+import mudcartographer.MudController;
+import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import mudcartographer.map.MudMap;
-import mudcartographer.map.Room;
-import mudcartographer.event.RoomEvent;
-import mudcartographer.MudController;
 
 /**
  * Handles the key events for a Mud map

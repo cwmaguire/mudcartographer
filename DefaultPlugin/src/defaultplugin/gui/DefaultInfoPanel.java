@@ -18,20 +18,23 @@ package defaultplugin.gui;
 
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
+import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.Room;
+import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class DefaultInfoPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(80,20);
     private static Dimension COLOR_LABEL_DIMENSION = new Dimension(20, 20);
-    private static int ROOM_PROPERTIES = Room.RoomProperty.BACKGROUND_COLOR.getFlagBits() |
-                                         Room.RoomProperty.TEXT_COLOR.getFlagBits() |
-                                         Room.RoomProperty.ID.getFlagBits() |
-                                         Room.RoomProperty.SYMBOL.getFlagBits();
+    private static int ROOM_PROPERTIES = RoomProperty.BACKGROUND_COLOR.getFlagBits() |
+                                         RoomProperty.TEXT_COLOR.getFlagBits() |
+                                         RoomProperty.ID.getFlagBits() |
+                                         RoomProperty.SYMBOL.getFlagBits();
 
     private Room room;
     private MudController controller;
@@ -150,7 +153,7 @@ public class DefaultInfoPanel extends MudCartographerPanel {
         roomSymbolField.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
-                controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.SYMBOL.getFlagBits(), DefaultInfoPanel.this));
+                controller.fireRoomEvent(new RoomEvent(room, RoomProperty.SYMBOL.getFlagBits(), DefaultInfoPanel.this));
             }
         });
 
@@ -160,7 +163,7 @@ public class DefaultInfoPanel extends MudCartographerPanel {
                 if(newColor != null){
                     textColorButton.setBackground(newColor);
                     room.setTextColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.TEXT_COLOR.getFlagBits(), DefaultInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TEXT_COLOR.getFlagBits(), DefaultInfoPanel.this));
                 }
             }
         });
@@ -171,10 +174,14 @@ public class DefaultInfoPanel extends MudCartographerPanel {
                 if(newColor != null){
                     backgroundColorButton.setBackground(newColor);
                     room.setBackgroundColor(newColor);
-                    controller.fireRoomEvent(new RoomEvent(room, Room.RoomProperty.BACKGROUND_COLOR.getFlagBits(), DefaultInfoPanel.this));
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.BACKGROUND_COLOR.getFlagBits(), DefaultInfoPanel.this));
                 }
             }
         });
+    }
+
+    public java.util.List<RoomEventListener> getListeners() {
+        return Arrays.asList((RoomEventListener) this);
     }
 
     /**
