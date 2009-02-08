@@ -53,13 +53,8 @@ public class MudCartographer{
         return frame;
     }
 
-    /**
-     * Load up the frame, controls and painter for a MudCartographer
-     */
     public void load(Plugin plugin){
         if(frame != null){
-            //frame.setVisible(false);
-            //frame = null;
             frame.remove(mainPanel);
         }else{
             frame = createAndSetupFrame();
@@ -149,6 +144,7 @@ public class MudCartographer{
     private JPanel createAndAddEmptyMainPanel(){
         mainPanel = new JPanel();
         JLabel instructionLabel = new JLabel("Open a map or create a new map to start.");
+        instructionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(instructionLabel, BorderLayout.CENTER);
