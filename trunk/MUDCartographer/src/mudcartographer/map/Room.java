@@ -18,6 +18,7 @@ package mudcartographer.map;
 
 import java.awt.*;
 
+// ToDo: this whole class needs to be gutted of all the non-essential garbage: it's abstract now
 /**
  * Represents a "drawable" "room"
  */

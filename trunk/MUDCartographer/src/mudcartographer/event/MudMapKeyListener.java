@@ -41,7 +41,6 @@ public class MudMapKeyListener extends KeyAdapter{
      * Invoked when a key has been released.
      */
     public void keyReleased(KeyEvent e){
-        //MapPainter painter = (MapPainter) e.getSource();
         Room room;
         int property = 0;
 
@@ -53,15 +52,6 @@ public class MudMapKeyListener extends KeyAdapter{
             room = map.selectOrCreateRoom(e);
             property = RoomProperty.getAll();
         }
-
-        // update the room info panel
-        //roomInfoPanel.updateRoomInfo(map.getCurrentRoom());
-
-
-        //painter.repaint();
-
-        // tell the scroll pane to recalculate it's scroll bars
-        //painter.revalidate();
 
         controller.fireRoomEvent(new RoomEvent(room, property, this));
     }

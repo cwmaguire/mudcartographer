@@ -39,6 +39,7 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
                                          RoomProperty.SYMBOL.getFlagBits() |
                                          RoomProperty.PAINT.getFlagBits() |
                                          // we need to grab focus after the description has been "saved"
+                                         // ToDo: no, now we have controller.releaseFocus()
                                          RoomProperty.DESCRIPTION.getFlagBits();
 
     private MudMap map;
