@@ -33,8 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AMRoomFlagPanel extends MudCartographerPanel {
-    private static Dimension LABEL_DIMENSION = new Dimension(50,20);
-    private static Dimension COLOR_LABEL_DIMENSION = new Dimension(20, 20);
+    private static Dimension LABEL_DIMENSION = new Dimension(80,20);
     public static int ROOM_PROPERTIES = RoomProperty.FLAGS.getFlagBits();
 
     private AMRoom room;

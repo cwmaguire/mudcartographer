@@ -21,7 +21,6 @@ import java.awt.event.KeyEvent;
 
 public class FileMenu extends JMenu {
 
-    private NewMenu newMenu;
     private SaveAsMenuItem saveAsMenuItem;
 
     public FileMenu(){
@@ -33,7 +32,7 @@ public class FileMenu extends JMenu {
     }
 
     private void createAndAddMenusAndItems() {
-        newMenu = new NewMenu();
+        NewMenu newMenu = new NewMenu();
         saveAsMenuItem = new SaveAsMenuItem();
 
         add(newMenu);

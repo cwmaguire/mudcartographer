@@ -96,68 +96,68 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(20, 10, 0, 0);
+        c.insets = new Insets(20, 0, 0, 0);
         this.add(roomIdLabel, c);
 
         c.gridx = 1;
         c.gridy = 0;
-        c.insets.set(20, 0, 0, 20);
+        c.insets.set(20, 0, 0, 0);
         //c.weightx = 1.0;
         this.add(roomIdField, c);
 
         c.gridx = 0;
         c.gridy = 1;
-        c.insets.set(5,10,0,0);
+        c.insets.set(5,0,0,0);
         this.add(roomNameLabel, c);
 
         c.gridx = 1;
         c.gridy = 1;
-        c.insets.set(5,0,0,20);
+        c.insets.set(5,0,0,0);
         this.add(roomNameField, c);
 
         c.gridx = 0;
         c.gridy = 2;
-        c.insets.set(5,10,0,0);
+        c.insets.set(5,0,0,0);
         this.add(roomSymbolLabel, c);
 
         c.gridx = 1;
         c.gridy = 2;
-        c.insets.set(5,0,0,20);
+        c.insets.set(5,0,0,0);
         this.add(roomSymbolField, c);
 
         c.gridx = 0;
         c.gridy = 3;
-        c.insets.set(5,10,0,0);
+        c.insets.set(5,0,0,0);
         this.add(roomTextColorLabel, c);
 
         c.gridx = 1;
         c.gridy = 3;
-        c.insets.set(5,0,0,20);
+        c.insets.set(5,0,0,0);
         this.add(textColorButton, c);
 
         c.gridx = 0;
         c.gridy = 4;
-        c.insets.set(5, 10, 0, 0);
+        c.insets.set(5, 0, 0, 0);
         this.add(roomBackgroundColorLabel, c);
 
         c.gridx = 1;
         c.gridy = 4;
-        c.insets.set(5, 0, 0, 20);
+        c.insets.set(5, 0, 0, 0);
         this.add(backgroundColorButton, c);
 
         c.gridx = 0;
         c.gridy = 5;
-        c.insets.set(5, 10, 0, 0);
+        c.insets.set(5, 0, 0, 0);
         this.add(roomTerrainLabel, c);
 
         c.gridx = 1;
         c.gridy = 5;
-        c.insets.set(5, 0, 0, 20);
+        c.insets.set(5, 0, 0, 0);
         this.add(roomTerrainComboBox, c);
 
         // create a final, empty panel to take up all the remaining space
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         c.gridwidth = 2;
         c.weighty = 1.0;
         this.add(new JPanel(), c);
