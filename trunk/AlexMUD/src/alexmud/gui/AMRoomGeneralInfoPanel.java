@@ -83,7 +83,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomNameField = new JTextField(15);
         roomTerrainComboBox = new JComboBox(getTerrainTypes());
         roomDescriptionTextArea = new JTextArea();
-        //roomDescriptionTextArea.setBorder(new LineBorder(Color.BLACK));
+        roomDescriptionTextArea.setLineWrap(true);
         roomDescriptionScrollPane = new JScrollPane(roomDescriptionTextArea);
     }
 
@@ -106,7 +106,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     }
 
     private void layoutGeneralTabComponents() {
-        this.setMinimumSize(new Dimension(350,200));
+        this.setMinimumSize(new Dimension(350, 200));
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -179,6 +179,22 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
 
     private void addGeneralTabPanelActionListeners() {
 
+        addRoomIdFieldListners();
+
+        addRoomNameFieldListeners();
+
+        addRoomSymbolFieldListeners();
+
+        addRoomTextColorButtonListeners();
+
+        addRoomBackgroundColorButtonListeners();
+
+        addRoomTerrainComboBoxListeners();
+
+        addRoomDescriptionTextAreaListeners();
+    }
+
+    private void addRoomIdFieldListners() {
         roomIdField.addKeyListener(new KeyAdapter() {
             int newRoomID;
 
@@ -200,7 +216,9 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 }
             }
         });
+    }
 
+    private void addRoomNameFieldListeners() {
         roomNameField.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -214,7 +232,9 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 }
             }
         });
+    }
 
+    private void addRoomSymbolFieldListeners() {
         // user shouldn't have to select the char
         roomSymbolField.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -229,7 +249,9 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 controller.fireRoomEvent(new RoomEvent(room, RoomProperty.SYMBOL.getFlagBits(), AMRoomGeneralInfoPanel.this));
             }
         });
+    }
 
+    private void addRoomTextColorButtonListeners() {
         textColorButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Color newColor = JColorChooser.showDialog(AMRoomGeneralInfoPanel.this, "Choose text Color", textColorButton.getBackground());
@@ -240,7 +262,9 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 }
             }
         });
+    }
 
+    private void addRoomBackgroundColorButtonListeners() {
         backgroundColorButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Color newColor = JColorChooser.showDialog(AMRoomGeneralInfoPanel.this, "Choose text Color", backgroundColorButton.getBackground());
@@ -251,7 +275,9 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                 }
             }
         });
+    }
 
+    private void addRoomTerrainComboBoxListeners() {
         roomTerrainComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String newRoomTerrain = (String) roomTerrainComboBox.getSelectedItem();
@@ -261,6 +287,24 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TERRAIN.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
 
+                controller.releaseFocus();
+            }
+        });
+    }
+
+    private void addRoomDescriptionTextAreaListeners() {
+        InputMap inputMap = roomDescriptionTextArea.getInputMap();
+        ActionMap actionMap = roomDescriptionTextArea.getActionMap();
+
+        Object transferTextActionKey = "RELEASE_FOCUS";
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), transferTextActionKey);
+
+        actionMap.put(transferTextActionKey, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if (!room.getDescription().equals(roomDescriptionTextArea.getText())) {
+                    room.setDescription(roomDescriptionTextArea.getText());
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.DESCRIPTION.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                }
                 controller.releaseFocus();
             }
         });

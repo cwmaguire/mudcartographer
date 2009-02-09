@@ -61,10 +61,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AMRoomGeneralInfoPanel.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AMRoomGeneralInfoPanel.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="13" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
+            <state line="305" column="89" selection-start="11409" selection-end="11409" vertical-scroll-proportion="0.6897275">
               <folding />
             </state>
           </provider>
@@ -79,10 +79,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AMRoomInfoPanel.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AMRoomInfoPanel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="41" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.1605691">
+            <state line="61" column="61" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -1044,16 +1044,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java">
+    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="13" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
+        <state line="61" column="61" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
+    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="41" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.1605691">
+        <state line="305" column="89" selection-start="11409" selection-end="11409" vertical-scroll-proportion="0.6897275">
           <folding />
         </state>
       </provider>
