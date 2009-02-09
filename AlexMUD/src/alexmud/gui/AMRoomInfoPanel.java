@@ -60,7 +60,6 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Info", wrapInScrollPane(infoPanel));
         tabbedPane.add("Flags", wrapInScrollPane(flagPanel));
-        //tabbedPane.setPreferredSize(new Dimension(355, 500));
 
         this.add(tabbedPane, BorderLayout.CENTER);
     }
