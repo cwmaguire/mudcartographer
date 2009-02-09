@@ -51,15 +51,19 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     private JLabel roomTextColorLabel = new JLabel("fg: ");
     private JLabel roomBackgroundColorLabel = new JLabel("bg: ");
     private JLabel roomTerrainLabel = new JLabel("Terrain: ");
+    private JLabel roomDescriptionLabel = new JLabel("Description: ");
 
     private JTextField roomIdField;
     private JTextField roomNameField;
     private JTextField roomSymbolField;
+    private JTextArea roomDescriptionTextArea;
 
     private JButton textColorButton;
     private JButton backgroundColorButton;
 
     private JComboBox roomTerrainComboBox;
+
+    private JScrollPane roomDescriptionScrollPane;
 
     public void initialize(MudController controller) {
         this.controller = controller;
@@ -77,8 +81,10 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomIdField = new JTextField(5);
         roomSymbolField = new JTextField(1);
         roomNameField = new JTextField(15);
-
         roomTerrainComboBox = new JComboBox(getTerrainTypes());
+        roomDescriptionTextArea = new JTextArea(4,30);
+        //roomDescriptionTextArea.setBorder(new LineBorder(Color.BLACK));
+        roomDescriptionScrollPane = new JScrollPane(roomDescriptionTextArea);
     }
 
     private String[] getTerrainTypes() {
@@ -93,25 +99,31 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomSymbolLabel.setPreferredSize(LABEL_DIMENSION);
         roomTextColorLabel.setPreferredSize(LABEL_DIMENSION);
         roomBackgroundColorLabel.setPreferredSize(LABEL_DIMENSION);
+        roomDescriptionLabel.setPreferredSize(LABEL_DIMENSION);
         textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
         backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
+        roomDescriptionScrollPane.setPreferredSize(new Dimension(150, 150));
     }
 
     private void layoutGeneralTabComponents() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(20, 0, 0, 0);
         this.add(roomIdLabel, c);
 
         c.gridx = 1;
-        c.gridy = 0;
-        c.insets.set(20, 0, 0, 0);
-        //c.weightx = 1.0;
         this.add(roomIdField, c);
+
+        c.gridx = 2;
+        c.gridheight = 8;
+        c.weightx = 1;
+        this.add(new JPanel());
+        c.gridheight = 1;
+        c.weightx = 0;
 
         c.gridx = 0;
         c.gridy = 1;
@@ -119,53 +131,46 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         this.add(roomNameLabel, c);
 
         c.gridx = 1;
-        c.gridy = 1;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomNameField, c);
 
         c.gridx = 0;
         c.gridy = 2;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomSymbolLabel, c);
 
         c.gridx = 1;
-        c.gridy = 2;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomSymbolField, c);
 
         c.gridx = 0;
         c.gridy = 3;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomTextColorLabel, c);
 
         c.gridx = 1;
-        c.gridy = 3;
-        c.insets.set(5, 0, 0, 0);
         this.add(textColorButton, c);
 
         c.gridx = 0;
         c.gridy = 4;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomBackgroundColorLabel, c);
 
         c.gridx = 1;
-        c.gridy = 4;
-        c.insets.set(5, 0, 0, 0);
         this.add(backgroundColorButton, c);
 
         c.gridx = 0;
         c.gridy = 5;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomTerrainLabel, c);
 
         c.gridx = 1;
-        c.gridy = 5;
-        c.insets.set(5, 0, 0, 0);
         this.add(roomTerrainComboBox, c);
+
+        c.gridx = 0;
+        c.gridy = 6;
+        this.add(roomDescriptionLabel, c);
+
+        c.gridx = 1;
+        this.add(roomDescriptionScrollPane, c);
 
         // create a final, empty panel to take up all the remaining space
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 7;
         c.gridwidth = 2;
         c.weighty = 1.0;
         this.add(new JPanel(), c);
@@ -275,6 +280,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         textColorButton.setBackground(this.room.getTextColor());
         backgroundColorButton.setBackground(this.room.getBackgroundColor());
         roomTerrainComboBox.setSelectedItem(this.room.getTerrain());
+        roomDescriptionTextArea.setText(this.room.getDescription());
     }
 
     public int getRelevantRoomEventFlags() {

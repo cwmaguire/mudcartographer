@@ -14,28 +14,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.gui;
 
-import mudcartographer.MudController;
-import mudcartographer.event.RoomEventListener;
+package alexmud.map;
 
-import javax.swing.*;
-import java.util.List;
-import java.util.Arrays;
-
-/**
- * Handles creating and maintaining a panel to
- * display room descriptions
- */
-public abstract class MudCartographerPanel extends JPanel implements RoomEventListener {
-
-    public abstract void initialize(MudController controller);
-
-    public List<RoomEventListener> getListeners(){
-        return Arrays.asList((RoomEventListener) this);
-    }
-
-    public boolean takeFocus(){
-        return false;
-    }
+public class RoomKeywordDescription {
+    public String keywords;
+    public String description;
 }
