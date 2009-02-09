@@ -44,7 +44,7 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
 
     public void initialize(MudController controller){
         this.controller = controller;
-        
+
         setupComponents();
     }
 
@@ -58,10 +58,10 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
         flagPanel.initialize(controller);
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add("Info", infoPanel);
+        tabbedPane.add("Info", wrapInScrollPane(infoPanel));
         tabbedPane.add("Flags", wrapInScrollPane(flagPanel));
-        tabbedPane.setPreferredSize(new Dimension(350, 200));
-        
+        //tabbedPane.setPreferredSize(new Dimension(355, 500));
+
         this.add(tabbedPane, BorderLayout.CENTER);
     }
 
@@ -72,7 +72,7 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
     public List<RoomEventListener> getListeners(){
         List<RoomEventListener> listeners = infoPanel.getListeners();
         List<RoomEventListener> listeners2 = flagPanel.getListeners();
-        
+
         List<RoomEventListener> allListeners = new ArrayList<RoomEventListener>();
         for(RoomEventListener listener : listeners){
             allListeners.add(listener);
