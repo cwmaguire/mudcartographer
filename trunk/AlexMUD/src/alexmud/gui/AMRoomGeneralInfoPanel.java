@@ -82,7 +82,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomSymbolField = new JTextField(1);
         roomNameField = new JTextField(15);
         roomTerrainComboBox = new JComboBox(getTerrainTypes());
-        roomDescriptionTextArea = new JTextArea(4,30);
+        roomDescriptionTextArea = new JTextArea();
         //roomDescriptionTextArea.setBorder(new LineBorder(Color.BLACK));
         roomDescriptionScrollPane = new JScrollPane(roomDescriptionTextArea);
     }
@@ -102,10 +102,11 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomDescriptionLabel.setPreferredSize(LABEL_DIMENSION);
         textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
         backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
-        roomDescriptionScrollPane.setPreferredSize(new Dimension(150, 150));
+        roomDescriptionScrollPane.setPreferredSize(new Dimension(240, 90));
     }
 
     private void layoutGeneralTabComponents() {
+        this.setMinimumSize(new Dimension(350,200));
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 

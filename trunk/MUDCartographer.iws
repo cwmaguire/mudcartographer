@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlexMUD/src/alexmud/map/AMRoom.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/map/AMRoom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlexMUD/src/alexmud/plugin/AlexMUDMapPlugin.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/plugin/AlexMUDMapPlugin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/map/RoomKeywordDescription.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MUDCartographer/src/mudcartographer/gui/MudCartographerPanel.java" afterPath="$PROJECT_DIR$/MUDCartographer/src/mudcartographer/gui/MudCartographerPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java" />
-      <change type="MOVED" beforePath="E:\dev\MudCartographer\AlexMUD\src\alexmud\gui\AMRoomDescriptionPanel.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomKeywordDescriptionsPanel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MUDCartographer/MUDCartographer.jar" afterPath="$PROJECT_DIR$/MUDCartographer/MUDCartographer.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java" afterPath="$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java" />
     </list>
     <ignored path="MUDCartographer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,21 +61,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AMRoomGeneralInfoPanel.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AMRoomGeneralInfoPanel.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="44" selection-start="4441" selection-end="4441" vertical-scroll-proportion="0.31092438">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="34" column="13" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AMRoomInfoPanel.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="JComponent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/JComponent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1691" column="16" selection-start="63336" selection-end="63336" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AMRoomInfoPanel.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="61" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+            <state line="51" column="41" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.1605691">
               <folding />
             </state>
           </provider>
@@ -89,10 +91,8 @@
       <file leaf-file-name="MudCartographer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/MudCartographer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="5" selection-start="4861" selection-end="4861" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="31" column="13" selection-start="1134" selection-end="1134" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -101,9 +101,7 @@
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomKeywordDescriptionsPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="74" column="5" selection-start="2455" selection-end="2455" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -112,9 +110,7 @@
         <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/map/AMRoom.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="102" column="36" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -575,92 +571,6 @@
           <option name="myItemId" value="AlexMUD" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.6 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="MUDCartographer" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="AlexMUD" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.6 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="rt.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="MUDCartographer" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="AlexMUD" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.6 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="rt.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="java" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="MUDCartographer" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="AlexMUD" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.6 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="rt.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="java" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="awt" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -838,8 +748,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -954,7 +864,7 @@
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
     <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <configuration useDefault="true">C:\Documents and Settings\Administrator\Application Data\Subversion</configuration>
+    <configuration useDefault="true">C:\Documents and Settings\ChrisMaguire\Application Data\Subversion</configuration>
     <upgradeMode>auto</upgradeMode>
     <myIsUseDefaultProxy>true</myIsUseDefaultProxy>
   </component>
@@ -979,32 +889,32 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1688" height="1024" extended-state="0" />
+    <frame x="-4" y="-4" width="1292" height="1024" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Dilbert" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32837528" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39816934" sideWeight="0.5" order="3" side_tool="false" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32837528" sideWeight="0.5" order="1" side_tool="false" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3971079" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32837528" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5938215" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.59510565" order="0" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
-      <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5938215" order="2" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" />
-      <window_info id="Dilbert" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
+      <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5938215" order="2" side_tool="false" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -1036,13 +946,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/MudController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MUDCartographer/src/LICENSE.TXT">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="71" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0">
@@ -1078,32 +981,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/border/LineBorder.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/java/awt/GridBagConstraints.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="13" selection-start="964" selection-end="964" vertical-scroll-proportion="0.0">
+        <state line="381" column="18" selection-start="13902" selection-end="13902" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/JLabel.java">
+    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomKeywordDescriptionsPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="742" column="16" selection-start="24499" selection-end="24499" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/MudCartographer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="5" selection-start="4861" selection-end="4861" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/gui/MudCartographerPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="75" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
+        <state line="74" column="5" selection-start="2455" selection-end="2455" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1111,31 +998,6 @@
     <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/map/AMRoom.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="102" column="36" selection-start="3327" selection-end="3327" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomKeywordDescriptionsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="5" selection-start="2455" selection-end="2455" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="61" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/java/awt/GridBagConstraints.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="381" column="18" selection-start="13902" selection-end="13902" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1147,12 +1009,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/gui/MudCartographerPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="75" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/JLabel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="742" column="16" selection-start="24499" selection-end="24499" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/border/LineBorder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="13" selection-start="964" selection-end="964" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/javax/swing/JComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1691" column="16" selection-start="63336" selection-end="63336" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MUDCartographer/src/mudcartographer/MudCartographer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1134" selection-end="1134" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomGeneralInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="44" selection-start="4441" selection-end="4441" vertical-scroll-proportion="0.31092438">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="34" column="13" selection-start="1160" selection-end="1160" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AlexMUD/src/alexmud/gui/AMRoomInfoPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="41" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.1605691">
+          <folding />
         </state>
       </provider>
     </entry>
