@@ -19,7 +19,7 @@ package alexmud.plugin;
 import alexmud.constants.ExternalConstants;
 import alexmud.file.reader.AMReader;
 import alexmud.file.writer.AMWriter;
-import alexmud.gui.AMRoomDescriptionPanel;
+import alexmud.gui.AMRoomKeywordDescriptionsPanel;
 import alexmud.gui.AMRoomInfoPanel;
 import alexmud.map.AMRoom;
 import mudcartographer.file.reader.FileReader;
@@ -28,7 +28,7 @@ import mudcartographer.plugin.Plugin;
 
 public class AlexMUDMapPlugin implements Plugin {
     public Class getRoomDescriptionPanelClass() {
-        return AMRoomDescriptionPanel.class;
+        return AMRoomKeywordDescriptionsPanel.class;
     }
 
     public Class getRoomInfoPanelClass() {

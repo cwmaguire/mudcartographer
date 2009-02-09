@@ -20,6 +20,7 @@ import mudcartographer.map.MudMap;
 import mudcartographer.map.Room;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class AMRoom extends Room {
     private Color textColor = Color.BLACK;
     private Color backgroundColor = Color.WHITE;
     private boolean isChanged;
+    private java.util.List<RoomKeywordDescription> keywordDescriptions;
     private String description = "";
     private String name = "";
     private String terrain = "";
@@ -56,6 +58,7 @@ public class AMRoom extends Room {
     public AMRoom(char symbol) {
         this.symbol = symbol;
         this.ID = useID();
+        this.keywordDescriptions = new ArrayList<RoomKeywordDescription>();
     }
 
     /**
@@ -87,6 +90,14 @@ public class AMRoom extends Room {
     public void setSymbol(char symbol) {
         this.symbol = symbol;
         this.setChanged(true);
+    }
+
+    public java.util.List<RoomKeywordDescription> getKeywordDescriptions() {
+        return keywordDescriptions;
+    }
+
+    public void setKeywordDescriptions(java.util.List<RoomKeywordDescription> descriptions) {
+        this.keywordDescriptions = descriptions;
     }
 
     public String getDescription() {
