@@ -25,6 +25,7 @@ public enum RoomProperty {
         TEXT_COLOR,
         BACKGROUND_COLOR,
         DESCRIPTION,
+        KEYWORD_DESCRIPTIONS,
         PAINT,
         NAME,
         TERRAIN,
