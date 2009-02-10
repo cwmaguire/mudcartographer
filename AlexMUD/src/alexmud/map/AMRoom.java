@@ -36,6 +36,7 @@ public class AMRoom extends Room {
     public static int nextID;
     // use the Direction enum to get the ordinals into the array of rooms
     private Room[] rooms = new Room[10];
+    private Exit[] exits = new Exit[10];
     private Map<String, Boolean> flags = new HashMap<String, Boolean>();
     private char symbol = 'a';
     // what was the ID of the last operation performed on this room
@@ -73,6 +74,18 @@ public class AMRoom extends Room {
 
     public void setRoom(Room r, MudMap.Direction d) {
         rooms[d.ordinal()] = r;
+    }
+
+    public Exit getExit(MudMap.Direction direction) {
+        return exits[direction.ordinal()];
+    }
+
+    public void createExit(MudMap.Direction direction){
+        exits[direction.ordinal()] = new Exit(direction);
+    }
+
+    public void setExits(Exit[] exits) {
+        this.exits = exits;
     }
 
     public boolean isFlagSet(String flagName){

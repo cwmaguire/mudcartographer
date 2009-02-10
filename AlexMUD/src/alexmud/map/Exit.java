@@ -15,29 +15,25 @@ You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package mudcartographer.map;
+package alexmud.map;
 
-public enum RoomProperty {
-        SYMBOL,
-        ID,
-        RECTANGLE,
-        POINT,
-        TEXT_COLOR,
-        BACKGROUND_COLOR,
-        DESCRIPTION,
-        KEYWORD_DESCRIPTIONS,
-        PAINT,
-        NAME,
-        TERRAIN,
-        FLAGS,
-        EXITS,
-        ROOMS;
+import mudcartographer.map.MudMap;
 
-        public int getFlagBits(){
-            return (int) Math.pow(2, (this.ordinal() + 1));
-        }
+public class Exit {
+    private MudMap.Direction direction;
+    public String destination;
+    public String lookDescription;
+    public String keywords;
+    public String doorName;
+    public String databaseKey;
+    public String lockDifficulty;
+    public String vKey;
 
-        public static int getAll(){
-            return Integer.MAX_VALUE; // in binary this is many 1's
-        }
+    public Exit(MudMap.Direction direction){
+        this.direction = direction;
     }
+
+    public MudMap.Direction getDirection(){
+        return this.direction;
+    }
+}
