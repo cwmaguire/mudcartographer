@@ -17,19 +17,19 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 
 package alexmud.gui;
 
-import alexmud.constants.ExternalConstants;
 import alexmud.map.AMRoom;
+import alexmud.map.Exit;
 import mudcartographer.MudController;
 import mudcartographer.event.RoomEvent;
 import mudcartographer.event.RoomEventListener;
 import mudcartographer.gui.MudCartographerPanel;
+import mudcartographer.map.MudMap;
 import mudcartographer.map.Room;
 import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AMRoomExitPanel extends MudCartographerPanel {
@@ -88,9 +88,12 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     }
 
     private String[] getDirections() {
-        ArrayList<String> directions = new ArrayList<String>(ExternalConstants.getConstants(ExternalConstants.DIRECTIONS_KEY));
-        directions.add(0, "");
-        return directions.toArray(new String[directions.size()]);
+        java.util.List<MudMap.Direction> directions = Arrays.asList(mudcartographer.map.MudMap.Direction.values());
+        String[] directionDescriptions = new String[directions.size()];
+        for(MudMap.Direction direction : directions){
+            directionDescriptions[direction.ordinal()] = direction.getDescription();
+        }
+        return directionDescriptions;
     }
 
     private void sizeExitComponents() {
@@ -116,6 +119,7 @@ public class AMRoomExitPanel extends MudCartographerPanel {
         componentAdder.c = c;
         componentAdder.panel = this;
 
+        componentAdder.add(Arrays.asList((JComponent) exitDirectionLabel, exitDirectionComboBox));
         componentAdder.add(Arrays.asList((JComponent) exitDestinationLabel, exitDestinationIDComboBox));
         componentAdder.add(Arrays.asList((JComponent) exitLookDescriptionLabel, exitLookDescriptionScrollPane));
         componentAdder.add(Arrays.asList((JComponent) exitKeywordsLabel, exitKeywordsScrollPane));
@@ -128,13 +132,13 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
     private void addExitActionListeners() {
 
+        addExitDirectionComboBoxListeners();
+
         /*addRoomIdFieldListners();
 
         addRoomNameFieldListeners();
 
         addRoomSymbolFieldListeners();
-
-        addRoomTerrainComboBoxListeners();
 
         addRoomDescriptionTextAreaListeners();*/
     }
@@ -196,16 +200,19 @@ public class AMRoomExitPanel extends MudCartographerPanel {
         });
     }
 
-    private void addRoomTerrainComboBoxListeners() {
+    private void addExitDirectionComboBoxListeners() {
         exitDestinationIDComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String newRoomTerrain = (String) exitDestinationIDComboBox.getSelectedItem();
+                String exitDirection = (String) exitDirectionComboBox.getSelectedItem();
+                MudMap.Direction direction = MudMap.Direction.getDirection(exitDirection);
+                Exit exit = room.getExit(direction);
 
-                if (!newRoomTerrain.equals(room.getTerrain())) {
-                    room.setTerrain(newRoomTerrain);
-                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TERRAIN.getFlagBits(), AMRoomExitPanel.this));
+                if(exit == null){
+                    room.createExit(direction);
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
                 }
 
+                update(exit);
                 controller.releaseFocus();
             }
         });
@@ -231,6 +238,16 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
     public java.util.List<RoomEventListener> getListeners() {
         return Arrays.asList((RoomEventListener) this);
+    }
+
+    public void update(Exit exit){
+        exitDestinationIDComboBox.setSelectedItem(exit.destination);
+        exitLookDescriptionTextArea.setText(exit.lookDescription);
+        exitKeywordsArea.setText(exit.keywords);
+        exitDoorNameField.setText(exit.doorName);
+        exitDatabaseKeyField.setText(exit.databaseKey);
+        exitLockDifficultyField.setText(exit.lockDifficulty);
+        exitVKeyField.setText(exit.vKey);
     }
 
     public void updateRoom(Room room) {

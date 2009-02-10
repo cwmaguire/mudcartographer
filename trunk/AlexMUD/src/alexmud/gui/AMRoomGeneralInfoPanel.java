@@ -107,7 +107,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     }
 
     private void layoutGeneralTabComponents() {
-        this.setMinimumSize(new Dimension(350, 200));
+        this.setMinimumSize(new Dimension(400, 200));
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 

@@ -92,6 +92,7 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
         }
         infoPanel.updateRoom(room);
         flagPanel.updateRoom(room);
+        exitPanel.updateRoom(room);
     }
 
     public int getRelevantRoomEventFlags(){

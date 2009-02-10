@@ -383,7 +383,7 @@ public class MudMap{
      * to represent "movement" in that direction
      */
     public enum Direction{
-        NORTH(){
+        NORTH("North"){
             public Point getTranslation(){
                 return new Point(0, 1);
             }
@@ -391,7 +391,7 @@ public class MudMap{
                 return SOUTH;
             }
         },
-        SOUTH(){
+        SOUTH("South"){
             public Point getTranslation(){
                 return new Point(0, -1);
             }
@@ -399,7 +399,7 @@ public class MudMap{
                 return NORTH;
             }
         },
-        EAST(){
+        EAST("East"){
             public Point getTranslation(){
                 return new Point(1, 0);
             }
@@ -407,7 +407,7 @@ public class MudMap{
                 return WEST;
             }
         },
-        WEST(){
+        WEST("West"){
             public Point getTranslation(){
                 return new Point(-1, 0);
             }
@@ -415,7 +415,7 @@ public class MudMap{
                 return EAST;
             }
         },
-        NE(){
+        NE("Northeast"){
             public Point getTranslation(){
                 return new Point(1, 1);
             }
@@ -423,7 +423,7 @@ public class MudMap{
                 return SW;
             }
         },
-        NW(){
+        NW("Northwest"){
             public Point getTranslation(){
                 return new Point(-1, 1);
             }
@@ -431,7 +431,7 @@ public class MudMap{
                 return SE;
             }
         },
-        SE(){
+        SE("Southeast"){
             public Point getTranslation(){
                 return new Point(1, -1);
             }
@@ -439,7 +439,7 @@ public class MudMap{
                 return NW;
             }
         },
-        SW(){
+        SW("Southwest"){
             public Point getTranslation(){
                 return new Point(-1, -1);
             }
@@ -447,7 +447,7 @@ public class MudMap{
                 return NE;
             }
         },
-        UP{
+        UP("Up"){
             public Point getTranslation(){
                 return new Point(0, 0);
             }
@@ -455,7 +455,7 @@ public class MudMap{
                 return DOWN;
             }
         },
-        DOWN{
+        DOWN("Down"){
             public Point getTranslation(){
                 return new Point(0, 0);
             }
@@ -469,6 +469,8 @@ public class MudMap{
          * this map will tell what direction the target room is in relative to the source room
          */
         private static Map<Point, Direction> pointDirections = new HashMap<Point, Direction>();
+        private static Map<String, Direction> descriptionDirections = new HashMap<String, Direction>();
+        private String description;
 
         static {
             pointDirections.put(new Point(0,1), NORTH);
@@ -479,6 +481,18 @@ public class MudMap{
             pointDirections.put(new Point(1, -1), NW);
             pointDirections.put(new Point(-1, 1), SE);
             pointDirections.put(new Point(-1, -1), SW);
+
+            for(Direction direction : Direction.values()){
+                descriptionDirections.put(direction.getDescription(), direction);
+            }
+        }
+
+        private Direction(String description){
+            this.description = description;
+        }
+
+        public String getDescription(){
+            return description;
         }
 
         /**
@@ -526,6 +540,10 @@ public class MudMap{
 
         public static Direction getDirection(Point p){
             return pointDirections.get(p);
+        }
+
+        public static MudMap.Direction getDirection(String description){
+          return descriptionDirections.get(description);
         }
 
         /**
