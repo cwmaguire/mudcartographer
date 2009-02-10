@@ -80,7 +80,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         // ToDo: make roomIdField numbers only (use a NumberFormatter with NumberFormat?)
         roomIdField = new JTextField(5);
         roomSymbolField = new JTextField(1);
-        roomNameField = new JTextField(15);
+        roomNameField = new JTextField();
         roomTerrainComboBox = new JComboBox(getTerrainTypes());
         roomDescriptionTextArea = new JTextArea();
         roomDescriptionTextArea.setLineWrap(true);
@@ -102,6 +102,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
         roomDescriptionLabel.setPreferredSize(LABEL_DIMENSION);
         textColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
         backgroundColorButton.setPreferredSize(COLOR_LABEL_DIMENSION);
+        roomNameField.setPreferredSize(new Dimension(240, 20));
         roomDescriptionScrollPane.setPreferredSize(new Dimension(240, 90));
     }
 

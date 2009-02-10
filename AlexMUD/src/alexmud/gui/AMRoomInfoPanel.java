@@ -39,6 +39,7 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
     private MudController controller;
     private MudCartographerPanel infoPanel;
     private MudCartographerPanel flagPanel;
+    private MudCartographerPanel exitPanel;
 
     public AMRoomInfoPanel(){}
 
@@ -53,13 +54,16 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
 
         infoPanel = new AMRoomGeneralInfoPanel();
         flagPanel = new AMRoomFlagPanel();
+        exitPanel = new AMRoomExitPanel();
 
         infoPanel.initialize(controller);
         flagPanel.initialize(controller);
+        exitPanel.initialize(controller);
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Info", wrapInScrollPane(infoPanel));
         tabbedPane.add("Flags", wrapInScrollPane(flagPanel));
+        tabbedPane.add("Exits", wrapInScrollPane(exitPanel));
 
         this.add(tabbedPane, BorderLayout.CENTER);
     }
