@@ -31,6 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class AMRoomExitPanel extends MudCartographerPanel {
     private static Dimension LABEL_DIMENSION = new Dimension(90, 20);
@@ -52,11 +53,11 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     private JTextField exitDatabaseKeyField;
     private JTextField exitLockDifficultyField;
     private JTextField exitVKeyField;
+    private JTextField exitDestinationIDField;
     private JTextArea exitLookDescriptionTextArea;
-    private JTextArea exitKeywordsArea;
+    private JTextArea exitKeywordsTextArea;
 
     private JComboBox exitDirectionComboBox;
-    private JComboBox exitDestinationIDComboBox;
     private JScrollPane exitLookDescriptionScrollPane;
     private JScrollPane exitKeywordsScrollPane;
 
@@ -71,16 +72,16 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     private void createExitComponents() {
 
         exitDirectionComboBox = new JComboBox(getDirections());
-        // ToDo: make exitDestinationIDComboBox numbers only (use a NumberFormatter with NumberFormat?)
-        exitDestinationIDComboBox = new JComboBox();
+        // ToDo: make exitDestinationIDField numbers only (use a NumberFormatter with NumberFormat?)
+        exitDestinationIDField = new JTextField();
         exitDatabaseKeyField = new JTextField(5);
         exitDoorNameField = new JTextField();
         exitLockDifficultyField = new JTextField(5);
         exitVKeyField = new JTextField(5);
 
-        exitKeywordsArea = new JTextArea();
-        exitKeywordsArea.setLineWrap(true);
-        exitKeywordsScrollPane = new JScrollPane(exitKeywordsArea);
+        exitKeywordsTextArea = new JTextArea();
+        exitKeywordsTextArea.setLineWrap(true);
+        exitKeywordsScrollPane = new JScrollPane(exitKeywordsTextArea);
 
         exitLookDescriptionTextArea = new JTextArea();
         exitLookDescriptionTextArea.setLineWrap(true);
@@ -88,9 +89,9 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     }
 
     private String[] getDirections() {
-        java.util.List<MudMap.Direction> directions = Arrays.asList(mudcartographer.map.MudMap.Direction.values());
+        List<MudMap.Direction> directions = Arrays.asList(MudMap.Direction.values());
         String[] directionDescriptions = new String[directions.size()];
-        for(MudMap.Direction direction : directions){
+        for (MudMap.Direction direction : directions) {
             directionDescriptions[direction.ordinal()] = direction.getDescription();
         }
         return directionDescriptions;
@@ -104,7 +105,8 @@ public class AMRoomExitPanel extends MudCartographerPanel {
         exitDatabaseKeyLabel.setPreferredSize(LABEL_DIMENSION);
         exitKeywordsLabel.setPreferredSize(LABEL_DIMENSION);
         exitVKeyLabel.setPreferredSize(LABEL_DIMENSION);
-        exitDoorNameField.setPreferredSize(new Dimension(220,20));
+        exitDestinationIDField.setPreferredSize(new Dimension(220, 20));
+        exitDoorNameField.setPreferredSize(new Dimension(220, 20));
         exitKeywordsScrollPane.setPreferredSize(new Dimension(220, 40));
         exitLookDescriptionScrollPane.setPreferredSize(new Dimension(220, 40));
     }
@@ -120,7 +122,7 @@ public class AMRoomExitPanel extends MudCartographerPanel {
         componentAdder.panel = this;
 
         componentAdder.add(Arrays.asList((JComponent) exitDirectionLabel, exitDirectionComboBox));
-        componentAdder.add(Arrays.asList((JComponent) exitDestinationLabel, exitDestinationIDComboBox));
+        componentAdder.add(Arrays.asList((JComponent) exitDestinationLabel, exitDestinationIDField));
         componentAdder.add(Arrays.asList((JComponent) exitLookDescriptionLabel, exitLookDescriptionScrollPane));
         componentAdder.add(Arrays.asList((JComponent) exitKeywordsLabel, exitKeywordsScrollPane));
         componentAdder.add(Arrays.asList((JComponent) exitDoorNameLabel, exitDoorNameField));
@@ -134,81 +136,30 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
         addExitDirectionComboBoxListeners();
 
-        /*addRoomIdFieldListners();
+        addExitDestinationListeners();
 
-        addRoomNameFieldListeners();
+        addExitLookDescriptionListeners();
 
-        addRoomSymbolFieldListeners();
+        addExitKeywordsListeners();
 
-        addRoomDescriptionTextAreaListeners();*/
-    }
+        addExitDoorNameListeners();
 
-    private void addRoomIdFieldListners() {
-        exitKeywordsArea.addKeyListener(new KeyAdapter() {
-            int newRoomID;
+        addExitDatabaseKeyListeners();
 
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    try {
-                        newRoomID = Integer.parseInt(exitKeywordsArea.getText());
-                    } catch (NumberFormatException nfe) {
-                        JOptionPane.showMessageDialog(AMRoomExitPanel.this, "Room ID must be an integer", "Invalid Room ID", JOptionPane.ERROR_MESSAGE);
-                        exitKeywordsArea.setText("0");
-                        return;
-                    }
-                    if (room.getID() != newRoomID) {
-                        room.setID(newRoomID);
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.ID.getFlagBits(), AMRoomExitPanel.this));
-                    }
+        addExitVKeyListeners();
 
-                    controller.releaseFocus();
-                }
-            }
-        });
-    }
-
-    private void addRoomNameFieldListeners() {
-        exitDoorNameField.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String newRoomName = exitDoorNameField.getText();
-                    if (!newRoomName.equals(room.getName())) {
-                        room.setName(newRoomName);
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.NAME.getFlagBits(), AMRoomExitPanel.this));
-                    }
-
-                    controller.releaseFocus();
-                }
-            }
-        });
-    }
-
-    private void addRoomSymbolFieldListeners() {
-        // user shouldn't have to select the char
-        exitDatabaseKeyField.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                exitDatabaseKeyField.selectAll();
-            }
-        });
-
-        exitDatabaseKeyField.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
-                controller.fireRoomEvent(new RoomEvent(room, RoomProperty.SYMBOL.getFlagBits(), AMRoomExitPanel.this));
-            }
-        });
+        addExitLockDifficultyListeners();
     }
 
     private void addExitDirectionComboBoxListeners() {
-        exitDestinationIDComboBox.addActionListener(new ActionListener() {
+        exitDirectionComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String exitDirection = (String) exitDirectionComboBox.getSelectedItem();
                 MudMap.Direction direction = MudMap.Direction.getDirection(exitDirection);
                 Exit exit = room.getExit(direction);
 
-                if(exit == null){
-                    room.createExit(direction);
+                if (exit == null) {
+                    exit = room.createExit(direction);
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
                 }
 
@@ -218,7 +169,35 @@ public class AMRoomExitPanel extends MudCartographerPanel {
         });
     }
 
-    private void addRoomDescriptionTextAreaListeners() {
+    private void addExitDestinationListeners() {
+        exitDestinationIDField.addKeyListener(new KeyAdapter() {
+            int newDestination;
+            Exit currentExit;
+
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        newDestination = Integer.parseInt(exitDestinationIDField.getText());
+                    } catch (NumberFormatException nfe) {
+                        JOptionPane.showMessageDialog(AMRoomExitPanel.this, "Destination Room ID must be an integer", "Invalid Destination Room ID", JOptionPane.ERROR_MESSAGE);
+                        exitKeywordsTextArea.setText("0");
+                        return;
+                    }
+
+                    currentExit = getCurrentExit();
+
+                    if (currentExit.destination == null || currentExit.destination != newDestination) {
+                        currentExit.destination = newDestination;
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                    }
+
+                    controller.releaseFocus();
+                }
+            }
+        });
+    }
+
+    private void addExitLookDescriptionListeners() {
         InputMap inputMap = exitLookDescriptionTextArea.getInputMap();
         ActionMap actionMap = exitLookDescriptionTextArea.getActionMap();
 
@@ -227,23 +206,137 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
         actionMap.put(transferTextActionKey, new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (!room.getDescription().equals(exitLookDescriptionTextArea.getText())) {
-                    room.setDescription(exitLookDescriptionTextArea.getText());
-                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.DESCRIPTION.getFlagBits(), AMRoomExitPanel.this));
+                Exit currentExit = getCurrentExit();
+                if (currentExit.lookDescription == null || !currentExit.lookDescription.equals(exitLookDescriptionTextArea.getText())) {
+                    currentExit.lookDescription = exitLookDescriptionTextArea.getText();
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
                 }
                 controller.releaseFocus();
             }
         });
     }
 
-    public java.util.List<RoomEventListener> getListeners() {
+    private void addExitKeywordsListeners() {
+        InputMap inputMap = exitKeywordsTextArea.getInputMap();
+        ActionMap actionMap = exitKeywordsTextArea.getActionMap();
+
+        Object transferTextActionKey = "RELEASE_FOCUS";
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), transferTextActionKey);
+
+        actionMap.put(transferTextActionKey, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                Exit currentExit = getCurrentExit();
+                if (currentExit.keywords == null || !currentExit.keywords.equals(exitKeywordsTextArea.getText())) {
+                    currentExit.keywords = exitKeywordsTextArea.getText();
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                }
+                controller.releaseFocus();
+            }
+        });
+    }
+
+    private void addExitDoorNameListeners() {
+        exitDoorNameField.addKeyListener(new KeyAdapter() {
+
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    Exit currentExit = getCurrentExit();
+                    String newDoorName = exitDoorNameField.getText();
+                    if (!newDoorName.equals(currentExit.doorName)) {
+                        currentExit.doorName = newDoorName;
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                    }
+
+                    controller.releaseFocus();
+                }
+            }
+        });
+    }
+
+    private void addExitDatabaseKeyListeners() {
+        exitDatabaseKeyField.addKeyListener(new KeyAdapter() {
+
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    Exit currentExit = getCurrentExit();
+                    String newDatabaseKey = exitDatabaseKeyField.getText();
+                    if (!newDatabaseKey.equals(currentExit.databaseKey)) {
+                        currentExit.databaseKey = newDatabaseKey;
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                    }
+
+                    controller.releaseFocus();
+                }
+            }
+        });
+    }
+
+    private void addExitVKeyListeners() {
+        exitVKeyField.addKeyListener(new KeyAdapter() {
+
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    Exit currentExit = getCurrentExit();
+                    String newVKey = exitVKeyField.getText();
+                    if (!newVKey.equals(currentExit.vKey)) {
+                        currentExit.vKey = newVKey;
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                    }
+
+                    controller.releaseFocus();
+                }
+            }
+        });
+    }
+
+    private void addExitLockDifficultyListeners() {
+        exitLockDifficultyField.addKeyListener(new KeyAdapter() {
+
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    Exit currentExit = getCurrentExit();
+                    String newLockDifficulty = exitLockDifficultyField.getText();
+                    if (!newLockDifficulty.equals(currentExit.lockDifficulty)) {
+                        currentExit.lockDifficulty = newLockDifficulty;
+                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                    }
+
+                    controller.releaseFocus();
+                }
+            }
+        });
+    }
+
+    public Exit getCurrentExit() {
+        return room.getExit(MudMap.Direction.getDirection((String) exitDirectionComboBox.getSelectedItem()));
+    }
+
+    public List<RoomEventListener> getListeners() {
         return Arrays.asList((RoomEventListener) this);
     }
 
-    public void update(Exit exit){
-        exitDestinationIDComboBox.setSelectedItem(exit.destination);
+    public void update(Exit exit) {
+        if (exit == null) {
+            clearExitFields();
+        } else {
+            updateExitFields(exit);
+        }
+    }
+
+    public void clearExitFields() {
+        exitDestinationIDField.setText(null);
+        exitLookDescriptionTextArea.setText(null);
+        exitKeywordsTextArea.setText(null);
+        exitDoorNameField.setText(null);
+        exitDatabaseKeyField.setText(null);
+        exitLockDifficultyField.setText(null);
+        exitVKeyField.setText(null);
+    }
+
+    public void updateExitFields(Exit exit) {
+        exitDestinationIDField.setText(exit.destination == null ? "" : exit.destination.toString());
         exitLookDescriptionTextArea.setText(exit.lookDescription);
-        exitKeywordsArea.setText(exit.keywords);
+        exitKeywordsTextArea.setText(exit.keywords);
         exitDoorNameField.setText(exit.doorName);
         exitDatabaseKeyField.setText(exit.databaseKey);
         exitLockDifficultyField.setText(exit.lockDifficulty);
@@ -251,17 +344,24 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     }
 
     public void updateRoom(Room room) {
+        Exit currentExit;
         if (!(room instanceof AMRoom)) {
             return;
         }
         this.room = (AMRoom) room;
-        /*
-        exitKeywordsArea.setText(String.valueOf(room.getID()));
-        exitDoorNameField.setText(this.room.getName());
-        exitDatabaseKeyField.setText(String.valueOf(this.room.getSymbol()));
-        exitDestinationIDComboBox.setSelectedItem(this.room.getTerrain());
-        exitLookDescriptionTextArea.setText(this.room.getDescription());
-        */
+
+        createMissingExits();
+
+        exitDirectionComboBox.getActionListeners()[0].actionPerformed(new ActionEvent(this, -1, ""));
+
+    }
+
+    private void createMissingExits() {
+        for (MudMap.Direction direction : MudMap.Direction.values()) {
+            if (room.getRoom(direction) != null && room.getExit(direction) == null) {
+                room.createExit(direction);
+            }
+        }
     }
 
     public int getRelevantRoomEventFlags() {

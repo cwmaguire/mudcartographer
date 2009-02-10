@@ -56,7 +56,7 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
         this.ID = NEXT_ID++;
         this.map = map;
 
-        
+
 /*
         this.addFocusListener(new FocusAdapter(){
             @Override
