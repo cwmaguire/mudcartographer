@@ -244,16 +244,12 @@ public class MudMap{
 
         // else connect and move to room in specified direction if one exists but is not directly
         // connected to this room
-        }else if((newCurrentRoom = getRoomAtPoint(currentRoom, origin, d.translatePoint(origin))) != null){
+        }else if((newCurrentRoom = getRoomAtCoordinate(currentRoom, origin, d.translatePoint(origin))) != null){
             currentRoom.setRoom(newCurrentRoom, d);
             newCurrentRoom.setRoom(currentRoom, d.getOpposite());
 
             //currentRoom = newCurrentRoom;
             setCurrentRoom(newCurrentRoom);
-
-            // ToDo: this should change: we could just draw the two rooms and the connection
-            // mark that we've changed the map (because we've added a connection
-            //setChanged(true);
             setHasNewConnection(true);
 
         // else create a new room in the specified direction
@@ -270,15 +266,15 @@ public class MudMap{
      * coordinates of the direction specified
      *
      * @param r the room to check to see if it is at the target coordinates
-     * @param p the coordinates of the room to check
-     * @param targetPoint the target coordinates to check for a room
+     * @param coordinate the coordinates of the room to check
+     * @param targetCoordinate the target coordinates to check for a room
      * @return the adjacent room if one exists or null
      */
-    private Room getRoomAtPoint(Room r, Point p, Point targetPoint){
+    private Room getRoomAtCoordinate(Room r, Point coordinate, Point targetCoordinate){
         Room nextRoom;
         Room adjacentRoom;
 
-        if(p.equals(targetPoint) || r == null){
+        if(coordinate.equals(targetCoordinate) || r == null){
             return r;
         }
 
@@ -288,8 +284,11 @@ public class MudMap{
         // ToDo optimize this so it tries the directions that are closest to the *current* target direction (e.g. if N, try NE and NW first, then E, W, etc.)
         for(Direction d: MudMap.Direction.values()){
             nextRoom = r.getRoom(d);
-            if(nextRoom != null && nextRoom.getCurrentOperationID() < currentOperationID && (adjacentRoom = getRoomAtPoint(nextRoom, d.translatePoint(p), targetPoint)) != null){
-                return adjacentRoom;
+            if(nextRoom != null && nextRoom.getCurrentOperationID() < currentOperationID){
+                adjacentRoom = getRoomAtCoordinate(nextRoom, d.translatePoint(coordinate), targetCoordinate);
+                if(adjacentRoom != null){
+                    return adjacentRoom;
+                }
             }
         }
 

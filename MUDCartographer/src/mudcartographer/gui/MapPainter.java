@@ -18,6 +18,7 @@ package mudcartographer.gui;
 
 import mudcartographer.MudController;
 import mudcartographer.event.MudMapKeyListener;
+import mudcartographer.event.RoomEvent;
 import mudcartographer.event.RoomEventListener;
 import mudcartographer.map.MudMap;
 import mudcartographer.map.Room;
@@ -25,6 +26,8 @@ import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
@@ -40,12 +43,14 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
                                          RoomProperty.PAINT.getFlagBits();
 
     private MudMap map;
+    public MudController controller;
     private BufferedImage buff;
     private Graphics2D g2Buff;
     private int currentOperationID;
     private static Map<Room, List<Room>> drawnLines = new HashMap<Room, List<Room>>();
     private Point[] maxPoints = {new Point(0,0), new Point(0,0)};
     private int ID;
+    private Map<Rectangle, Room> rectangleRooms = new HashMap<Rectangle, Room>();
 
     /**
      * Construct a new Painter object
@@ -55,22 +60,6 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
     public MapPainter(MudMap map){
         this.ID = NEXT_ID++;
         this.map = map;
-
-
-/*
-        this.addFocusListener(new FocusAdapter(){
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-                System.out.println("Map painter gained focus");
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                System.out.println("Map painter lost focus");
-            }
-        });*/
     }
 
     public int getID(){
@@ -117,9 +106,6 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
                 return;
             }
 
-            // should already have been done when the image was created
-            //g2Buff = buff.createGraphics();
-
             // if some rooms have changed, redraw them
             if(map.isCurrentRoomChanged()){
                 // overwrite the new selected currentRoom
@@ -163,6 +149,7 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
             g2Buff = buff.createGraphics();
 
             currentOperationID = map.getNewCurrentOperationID();
+            rectangleRooms = new HashMap<Rectangle, Room>();
 
             // Start drawing with the initial room
             drawRoom(initialRoom, initialPoint);
@@ -199,13 +186,17 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
         Point drawToPoint;
         List<Room> regdRooms1;
         List<Room> regdRooms2;
+        Rectangle roomRectangle;
 
         // calculate where to draw based on where we are
         int x = (int) currentGridCoordinate.getX() * (Room.BOX_WIDTH_HEIGHT + Room.BOX_SPACING) + Room.PADDING;
         int y = (int) currentGridCoordinate.getY() * (Room.BOX_WIDTH_HEIGHT + Room.BOX_SPACING) + Room.PADDING;
 
+        roomRectangle = new Rectangle(x, y, Room.BOX_WIDTH_HEIGHT, Room.BOX_WIDTH_HEIGHT);
+        rectangleRooms.put(roomRectangle, r);
+
         // paint the room
-        r.paint(g2Buff, new Rectangle(x, y, Room.BOX_WIDTH_HEIGHT, Room.BOX_WIDTH_HEIGHT), r.equals(map.getCurrentRoom()));
+        r.paint(g2Buff, roomRectangle, r.equals(map.getCurrentRoom()));
 
         // mark this room as drawn
         r.setCurrentOperationID(currentOperationID);
@@ -325,8 +316,34 @@ public class MapPainter extends JComponent implements Scrollable, RoomEventListe
     }
 
     public void setupEventHandling(MudController controller){
+        this.controller = controller;
         setFocusable(true);
         addKeyListener(new MudMapKeyListener(map, controller));
         controller.addListener(this);
+        addMouseListener();
+    }
+
+    private void addMouseListener(){
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                Room clickedRoom = getRoomAtPoint(e.getPoint());
+                if(clickedRoom != null){
+                    map.setCurrentRoom(clickedRoom);
+                    updateRoom(clickedRoom);
+                    controller.fireRoomEvent(new RoomEvent(clickedRoom, RoomProperty.getAll(), this));
+                }
+            }
+        });
+    }
+
+    private Room getRoomAtPoint(Point point){
+        for(Rectangle rectangle : rectangleRooms.keySet()){
+            if(rectangle.contains(point)){
+                return rectangleRooms.get(rectangle);
+            }
+        }
+        return null;
     }
 }
