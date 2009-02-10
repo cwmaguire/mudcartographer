@@ -24,7 +24,7 @@ import mudcartographer.map.Room;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -73,17 +73,13 @@ public class AMRoomInfoPanel extends MudCartographerPanel {
     }
 
     public List<RoomEventListener> getListeners(){
-        List<RoomEventListener> listeners = infoPanel.getListeners();
-        List<RoomEventListener> listeners2 = flagPanel.getListeners();
+        Set<RoomEventListener> allListeners = new HashSet<RoomEventListener>();
 
-        List<RoomEventListener> allListeners = new ArrayList<RoomEventListener>();
-        for(RoomEventListener listener : listeners){
-            allListeners.add(listener);
+        for(MudCartographerPanel panel : Arrays.asList(infoPanel, flagPanel, exitPanel)){
+            allListeners.addAll(panel.getListeners());
         }
-        for(RoomEventListener listener : listeners2){
-            allListeners.add(listener);
-        }
-        return allListeners;
+        
+        return new ArrayList<RoomEventListener>(allListeners);
     }
 
     public void updateRoom(Room room){

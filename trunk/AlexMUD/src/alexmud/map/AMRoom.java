@@ -80,8 +80,14 @@ public class AMRoom extends Room {
         return exits[direction.ordinal()];
     }
 
-    public void createExit(MudMap.Direction direction){
-        exits[direction.ordinal()] = new Exit(direction);
+    public Exit createExit(MudMap.Direction direction){
+        Exit exit = new Exit(direction);
+        Room connectedRoom = getRoom(direction);
+        if(connectedRoom != null){
+            exit.destination = connectedRoom.getID();
+        }
+        exits[direction.ordinal()] = exit;
+        return exit;
     }
 
     public void setExits(Exit[] exits) {

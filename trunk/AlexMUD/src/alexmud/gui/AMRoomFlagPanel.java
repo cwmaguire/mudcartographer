@@ -105,7 +105,7 @@ public class AMRoomFlagPanel extends MudCartographerPanel {
         }
     }
 
-    public java.util.List<RoomEventListener> getListeners() {
+    public List<RoomEventListener> getListeners() {
         return Arrays.asList((RoomEventListener) this);
     }
 

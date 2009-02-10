@@ -21,7 +21,7 @@ import mudcartographer.map.MudMap;
 
 public class Exit {
     private MudMap.Direction direction;
-    public String destination;
+    public Integer destination;
     public String lookDescription;
     public String keywords;
     public String doorName;
