@@ -29,7 +29,8 @@ public enum RoomProperty {
         PAINT,
         NAME,
         TERRAIN,
-        FLAGS;
+        FLAGS,
+        EXITS;
 
         public int getFlagBits(){
             return (int) Math.pow(2, (this.ordinal() + 1));

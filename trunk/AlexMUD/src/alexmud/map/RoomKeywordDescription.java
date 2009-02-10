@@ -17,7 +17,29 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 
 package alexmud.map;
 
+import java.util.List;
+
 public class RoomKeywordDescription {
     public String keywords;
     public String description;
+
+    public RoomKeywordDescription(String[] keywordDescription){
+        keywords = keywordDescription[0];
+        description = keywordDescription[1];
+    }
+
+    public static String[][] get2DArrayOfKeywordDescriptions(List<RoomKeywordDescription> keywordDescriptions){
+        String[][] keywordDescriptionArray = new String[keywordDescriptions.size()][2];
+        for(int i = 0; i < keywordDescriptions.size(); i++){
+            keywordDescriptionArray[i] = keywordDescriptions.get(i).toArray();
+        }
+        return keywordDescriptionArray;
+    }
+
+    public String[] toArray(){
+        String[] keywordDescription = new String[2];
+        keywordDescription[0] = keywords;
+        keywordDescription[1] = description;
+        return keywordDescription;
+    }
 }
