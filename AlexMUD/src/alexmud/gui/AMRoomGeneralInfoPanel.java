@@ -200,19 +200,19 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
             int newRoomID;
 
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    try {
-                        newRoomID = Integer.parseInt(roomIdField.getText());
-                    } catch (NumberFormatException nfe) {
-                        JOptionPane.showMessageDialog(AMRoomGeneralInfoPanel.this, "Room ID must be an integer", "Invalid Room ID", JOptionPane.ERROR_MESSAGE);
-                        roomIdField.setText("0");
-                        return;
-                    }
-                    if (room.getID() != newRoomID) {
-                        room.setID(newRoomID);
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.ID.getFlagBits(), AMRoomGeneralInfoPanel.this));
-                    }
+                try {
+                    newRoomID = Integer.parseInt(roomIdField.getText());
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(AMRoomGeneralInfoPanel.this, "Room ID must be an integer", "Invalid Room ID", JOptionPane.ERROR_MESSAGE);
+                    roomIdField.setText("0");
+                    return;
+                }
+                if (room.getID() != newRoomID) {
+                    room.setID(newRoomID);
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.ID.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                }
 
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     controller.releaseFocus();
                 }
             }
@@ -222,13 +222,13 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
     private void addRoomNameFieldListeners() {
         roomNameField.addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String newRoomName = roomNameField.getText();
                     if (!newRoomName.equals(room.getName())) {
                         room.setName(newRoomName);
                         controller.fireRoomEvent(new RoomEvent(room, RoomProperty.NAME.getFlagBits(), AMRoomGeneralInfoPanel.this));
                     }
 
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     controller.releaseFocus();
                 }
             }
@@ -248,6 +248,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
             public void keyTyped(KeyEvent e) {
                 room.setSymbol(Character.isLetterOrDigit(e.getKeyChar()) ? e.getKeyChar() : ' ');
                 controller.fireRoomEvent(new RoomEvent(room, RoomProperty.SYMBOL.getFlagBits(), AMRoomGeneralInfoPanel.this));
+                controller.releaseFocus();
             }
         });
     }
@@ -261,6 +262,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                     room.setTextColor(newColor);
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.TEXT_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
+                controller.releaseFocus();
             }
         });
     }
@@ -274,6 +276,7 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
                     room.setBackgroundColor(newColor);
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.BACKGROUND_COLOR.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
+                controller.releaseFocus();
             }
         });
     }
@@ -302,11 +305,18 @@ public class AMRoomGeneralInfoPanel extends MudCartographerPanel {
 
         actionMap.put(transferTextActionKey, new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (!room.getDescription().equals(roomDescriptionTextArea.getText())) {
-                    room.setDescription(roomDescriptionTextArea.getText());
+                controller.releaseFocus();
+            }
+        });
+
+        roomDescriptionTextArea.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e) {
+                String oldDescription = room.getDescription();
+                String newDescription = roomDescriptionTextArea.getText();
+                if (oldDescription == null || !oldDescription.equals(newDescription)) {
+                    room.setDescription(newDescription);
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.DESCRIPTION.getFlagBits(), AMRoomGeneralInfoPanel.this));
                 }
-                controller.releaseFocus();
             }
         });
     }
