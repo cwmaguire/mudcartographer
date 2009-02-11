@@ -16,14 +16,13 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package defaultplugin.plugin;
 
-import defaultplugin.file.reader.DefaultReader;
-import defaultplugin.file.writer.DefaultWriter;
-import defaultplugin.map.DefaultRoom;
 import defaultplugin.gui.DefaultDescriptionPanel;
 import defaultplugin.gui.DefaultInfoPanel;
-import mudcartographer.file.reader.FileReader;
-import mudcartographer.file.writer.FileWriter;
+import defaultplugin.map.DefaultRoom;
 import mudcartographer.plugin.Plugin;
+
+import java.awt.*;
+import java.util.List;
 
 public class DefaultPlugin implements Plugin {
     public Class getRoomDescriptionPanelClass() {
@@ -38,15 +37,11 @@ public class DefaultPlugin implements Plugin {
         return DefaultRoom.class;
     }
 
-    public FileReader getFileReader() {
-        return new DefaultReader();
-    }
-
-    public FileWriter getFileWriter() {
-        return new DefaultWriter();
-    }
-
     public void setup(){
-        
+
+    }
+
+    public List<Component> getMenuComponents(String menuText) {
+        return null;
     }
 }

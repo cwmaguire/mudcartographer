@@ -261,4 +261,8 @@ public class AMRoom extends Room {
         g2.drawString(String.valueOf(getSymbol()) /*+ r.getID()*/, (int) rectangle.getX() + TEXT_SPACING, (int) rectangle.getY() + TEXT_SPACING + TEXT_HEIGHT);
 
     }
+
+    public String toString(){
+        return "AMRoom";
+    }
 }

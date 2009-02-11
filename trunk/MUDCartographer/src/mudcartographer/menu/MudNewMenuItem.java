@@ -24,8 +24,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NewMenuItem extends JMenuItem {
-    public NewMenuItem(final PluginImpl pluginImpl) {
+public class MudNewMenuItem extends JMenuItem {
+    public MudNewMenuItem(final PluginImpl pluginImpl) {
         setText(pluginImpl.getDescription());
         setMnemonic(pluginImpl.getKeyEvent());
 
@@ -38,7 +38,9 @@ public class NewMenuItem extends JMenuItem {
                 MudCartographer.mudCartographer.load(pluginImpl.getPlugin());
             }
         });
+    }
 
-
+    public void setIsMapLoaded(boolean isMapLoaded){
+        
     }
 }

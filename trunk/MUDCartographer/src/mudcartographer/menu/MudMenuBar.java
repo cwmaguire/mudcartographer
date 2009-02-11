@@ -14,11 +14,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mudcartographer.file.reader;
+package mudcartographer.menu;
 
-import java.io.File;
-import java.util.Map;
+import mudcartographer.plugin.Plugin;
 
-public abstract class FileReader {
-    public abstract Map read(File file);
+import javax.swing.*;
+
+public class MudMenuBar extends JMenuBar{
+
+    MudFileMenu mudFileMenu;
+    Plugin plugin;
+
+    public MudMenuBar(Plugin plugin){
+        this.plugin = plugin;
+    }
+
+    public void setup(){
+
+        mudFileMenu = new MudFileMenu(plugin);
+        this.add(mudFileMenu);
+
+    }
+
+    public void setIsEditing(boolean isEditing){
+        mudFileMenu.setIsEditing(isEditing);
+    }
 }

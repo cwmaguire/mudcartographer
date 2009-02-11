@@ -17,14 +17,13 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 package alexmud.plugin;
 
 import alexmud.constants.ExternalConstants;
-import alexmud.file.reader.AMReader;
-import alexmud.file.writer.AMWriter;
-import alexmud.gui.AMRoomKeywordDescriptionsPanel;
 import alexmud.gui.AMRoomInfoPanel;
+import alexmud.gui.AMRoomKeywordDescriptionsPanel;
 import alexmud.map.AMRoom;
-import mudcartographer.file.reader.FileReader;
-import mudcartographer.file.writer.FileWriter;
 import mudcartographer.plugin.Plugin;
+
+import java.awt.*;
+import java.util.List;
 
 public class AlexMUDMapPlugin implements Plugin {
     public Class getRoomDescriptionPanelClass() {
@@ -39,15 +38,11 @@ public class AlexMUDMapPlugin implements Plugin {
         return AMRoom.class;
     }
 
-    public FileReader getFileReader() {
-        return new AMReader();
-    }
-
-    public FileWriter getFileWriter() {
-        return new AMWriter();
-    }
-
     public void setup(){
         ExternalConstants.load();
+    }
+
+    public List<Component> getMenuComponents(String menuText) {
+        return null;
     }
 }
