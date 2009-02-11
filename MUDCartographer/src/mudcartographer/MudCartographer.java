@@ -20,7 +20,7 @@ import mudcartographer.gui.MapPainter;
 import mudcartographer.gui.MudCartographerPanel;
 import mudcartographer.map.MudMap;
 import mudcartographer.map.RoomProperty;
-import mudcartographer.menu.MenuBar;
+import mudcartographer.menu.MudMenuBar;
 import mudcartographer.plugin.Plugin;
 
 import javax.swing.*;
@@ -41,7 +41,7 @@ public class MudCartographer{
     private JScrollPane mapPainterScrollPane;
     private MudCartographerPanel roomInfoPanel;
     private MudCartographerPanel roomDescriptionPanel;
-    private MenuBar menuBar;
+    private MudMenuBar mudMenuBar;
     private JPanel mainPanel;
 
     public static void main(String[] args){
@@ -61,15 +61,18 @@ public class MudCartographer{
             controller = MudController.getMudController();
         }
 
-        frame.setJMenuBar(createMenu());
 
         if(plugin == null){
             frame.add(createAndAddEmptyMainPanel());
-            menuBar.setIsEditing(false);
+            mudMenuBar = createMenu();
+            frame.setJMenuBar(mudMenuBar);
+            mudMenuBar.setIsEditing(false);
         }else{
             plugin.setup();
             loadPlugin(plugin);
-            menuBar.setIsEditing(true);
+            mudMenuBar = createMenu(plugin);
+            frame.setJMenuBar(mudMenuBar);
+            mudMenuBar.setIsEditing(true);
         }
 
         frame.pack();
@@ -135,10 +138,14 @@ public class MudCartographer{
         return painter;
     }
 
-    private JMenuBar createMenu(){
-        menuBar = new mudcartographer.menu.MenuBar();
-        menuBar.setup();
-        return menuBar;
+    private MudMenuBar createMenu(){
+        return createMenu(null);
+    }
+
+    private MudMenuBar createMenu(Plugin plugin){
+        MudMenuBar mudMenuBar = new MudMenuBar(plugin);
+        mudMenuBar.setup();
+        return mudMenuBar;
     }
 
     private JPanel createAndAddEmptyMainPanel(){

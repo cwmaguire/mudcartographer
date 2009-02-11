@@ -16,31 +16,20 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
+import mudcartographer.plugin.PluginImpl;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
-public class FileMenu extends JMenu {
+public class MudNewMenu extends JMenu {
 
-    private SaveAsMenuItem saveAsMenuItem;
+    public MudNewMenu(){
+        setText("New ...");
+        setMnemonic(KeyEvent.VK_N);
+        getAccessibleContext().setAccessibleDescription("Create a new map");
 
-    public FileMenu(){
-        setText("File");
-        setMnemonic(KeyEvent.VK_F);
-        getAccessibleContext().setAccessibleDescription("Open, Save, Export, etc.");
-
-        createAndAddMenusAndItems();
+        for(PluginImpl pluginImpl : PluginImpl.values()){
+             add (new MudNewMenuItem(pluginImpl));
+        }
     }
-
-    private void createAndAddMenusAndItems() {
-        NewMenu newMenu = new NewMenu();
-        saveAsMenuItem = new SaveAsMenuItem();
-
-        add(newMenu);
-        add(saveAsMenuItem);
-    }
-
-    public void setIsEditing(boolean isEditing){
-        saveAsMenuItem.setEnabled(isEditing);
-    }
-
 }

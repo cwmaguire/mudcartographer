@@ -16,14 +16,13 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.plugin;
 
-import mudcartographer.file.reader.FileReader;
-import mudcartographer.file.writer.FileWriter;
+import java.awt.*;
+import java.util.List;
 
 public interface Plugin {
     public Class getRoomDescriptionPanelClass();
     public Class getRoomInfoPanelClass();
     public Class getRoomClass();
-    public FileReader getFileReader();
-    public FileWriter getFileWriter();
+    public List<Component> getMenuComponents(String menuText);
     public void setup();
 }

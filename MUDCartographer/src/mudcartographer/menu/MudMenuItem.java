@@ -16,20 +16,8 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
-import mudcartographer.plugin.PluginImpl;
-
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 
-public class NewMenu extends JMenu {
-
-    public NewMenu(){
-        setText("New ...");
-        setMnemonic(KeyEvent.VK_N);
-        getAccessibleContext().setAccessibleDescription("Create a new map");
-
-        for(PluginImpl pluginImpl : PluginImpl.values()){
-             add (new NewMenuItem(pluginImpl));
-        }
-    }
+public abstract class MudMenuItem extends JMenuItem {
+    public abstract void setIsMapLoaded(boolean isMapLoaded);
 }

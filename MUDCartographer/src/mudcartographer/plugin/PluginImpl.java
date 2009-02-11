@@ -20,8 +20,8 @@ import alexmud.plugin.AlexMUDMapPlugin;
 import defaultplugin.plugin.DefaultPlugin;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public enum PluginImpl {
     ALEXMUD("AlexMUD"){
