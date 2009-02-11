@@ -28,8 +28,10 @@ import mudcartographer.map.Room;
 import mudcartographer.map.RoomProperty;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,6 +135,12 @@ public class AMRoomExitPanel extends MudCartographerPanel {
     }
 
     private void addExitActionListeners() {
+        this.addFocusListener(new FocusAdapter(){
+            @Override
+            public void focusLost(FocusEvent e) {
+                System.out.println("Exit panel lost focus");
+            }
+        });
 
         addExitDirectionComboBoxListeners();
 
@@ -142,13 +150,35 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
         addExitKeywordsListeners();
 
-        addExitDoorNameListeners();
+        addTextComponentListeners();
 
-        addExitDatabaseKeyListeners();
+    }
 
-        addExitVKeyListeners();
+    private void addTextComponentListeners(){
+        Field doorNameField;
+        Field databaseKeyField;
+        Field vKeyField;
+        Field lockDifficultyField;
 
-        addExitLockDifficultyListeners();
+        try{
+            doorNameField = Exit.class.getField("doorName");
+            databaseKeyField = Exit.class.getField("databaseKey");
+            vKeyField = Exit.class.getField("vKey");
+            lockDifficultyField = Exit.class.getField("lockDifficulty");
+        }catch(Exception e){
+            System.out.println("Error adding exit tab field listeners: " + e.getMessage());
+            return;
+        }
+
+        exitDoorNameField.addKeyListener(new ExitKeyAdapter(doorNameField));
+        exitDatabaseKeyField.addKeyListener(new ExitKeyAdapter(databaseKeyField));
+        exitVKeyField.addKeyListener(new ExitKeyAdapter(vKeyField));
+        exitLockDifficultyField.addKeyListener(new ExitKeyAdapter(lockDifficultyField));
+
+        exitDoorNameField.addFocusListener(new ExitFocusAdapter(doorNameField));
+        exitDatabaseKeyField.addFocusListener(new ExitFocusAdapter(databaseKeyField));
+        exitVKeyField.addFocusListener(new ExitFocusAdapter(vKeyField));
+        exitLockDifficultyField.addFocusListener(new ExitFocusAdapter(lockDifficultyField));
     }
 
     private void addExitDirectionComboBoxListeners() {
@@ -195,6 +225,31 @@ public class AMRoomExitPanel extends MudCartographerPanel {
                 }
             }
         });
+
+        exitDestinationIDField.addFocusListener(new FocusAdapter() {
+            Integer newDestination;
+            Exit currentExit;
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    newDestination = Integer.parseInt(exitDestinationIDField.getText());
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(AMRoomExitPanel.this, "Destination Room ID must be an integer", "Invalid Destination Room ID", JOptionPane.ERROR_MESSAGE);
+                    exitKeywordsTextArea.setText("0");
+                    return;
+                }
+
+                currentExit = getCurrentExit();
+
+                if (currentExit.destination == null || currentExit.destination.equals(newDestination)) {
+                    currentExit.destination = newDestination;
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                }
+
+                controller.releaseFocus();
+            }
+        });
     }
 
     private void addExitLookDescriptionListeners() {
@@ -231,78 +286,6 @@ public class AMRoomExitPanel extends MudCartographerPanel {
                     controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
                 }
                 controller.releaseFocus();
-            }
-        });
-    }
-
-    private void addExitDoorNameListeners() {
-        exitDoorNameField.addKeyListener(new KeyAdapter() {
-
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    Exit currentExit = getCurrentExit();
-                    String newDoorName = exitDoorNameField.getText();
-                    if (!newDoorName.equals(currentExit.doorName)) {
-                        currentExit.doorName = newDoorName;
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
-                    }
-
-                    controller.releaseFocus();
-                }
-            }
-        });
-    }
-
-    private void addExitDatabaseKeyListeners() {
-        exitDatabaseKeyField.addKeyListener(new KeyAdapter() {
-
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    Exit currentExit = getCurrentExit();
-                    String newDatabaseKey = exitDatabaseKeyField.getText();
-                    if (!newDatabaseKey.equals(currentExit.databaseKey)) {
-                        currentExit.databaseKey = newDatabaseKey;
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
-                    }
-
-                    controller.releaseFocus();
-                }
-            }
-        });
-    }
-
-    private void addExitVKeyListeners() {
-        exitVKeyField.addKeyListener(new KeyAdapter() {
-
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    Exit currentExit = getCurrentExit();
-                    String newVKey = exitVKeyField.getText();
-                    if (!newVKey.equals(currentExit.vKey)) {
-                        currentExit.vKey = newVKey;
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
-                    }
-
-                    controller.releaseFocus();
-                }
-            }
-        });
-    }
-
-    private void addExitLockDifficultyListeners() {
-        exitLockDifficultyField.addKeyListener(new KeyAdapter() {
-
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    Exit currentExit = getCurrentExit();
-                    String newLockDifficulty = exitLockDifficultyField.getText();
-                    if (!newLockDifficulty.equals(currentExit.lockDifficulty)) {
-                        currentExit.lockDifficulty = newLockDifficulty;
-                        controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
-                    }
-
-                    controller.releaseFocus();
-                }
             }
         });
     }
@@ -366,5 +349,64 @@ public class AMRoomExitPanel extends MudCartographerPanel {
 
     public int getRelevantRoomEventFlags() {
         return ROOM_PROPERTIES;
+    }
+
+
+    private class ExitKeyAdapter extends KeyAdapter {
+        private Field exitField;
+
+        public ExitKeyAdapter(Field exitField) {
+            this.exitField = exitField;
+        }
+
+        public void keyReleased(KeyEvent e) {
+            String oldValue = null;
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                Exit currentExit = getCurrentExit();
+                String newValue = ((JTextComponent) e.getSource()).getText();
+                try {
+                    oldValue = (String) exitField.get(currentExit);
+                } catch (Exception ex) {
+                    System.out.println("Could not retrieve value for Exit field " + exitField.getName());
+                }
+
+                if (!newValue.equals(oldValue)) {
+                    currentExit.doorName = newValue;
+                    controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+                }
+
+                controller.releaseFocus();
+            }
+        }
+    }
+
+    private class ExitFocusAdapter extends FocusAdapter {
+        private Field exitField;
+
+        public ExitFocusAdapter(Field exitField) {
+            this.exitField = exitField;
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            System.out.println("Focus lost by " + ((JTextField) e.getSource()).getName());
+
+            String oldValue = null;
+            String newValue = ((JTextComponent) e.getSource()).getText();
+            Exit currentExit = getCurrentExit();
+
+            try {
+                oldValue = (String) exitField.get(currentExit);
+            } catch (Exception ex) {
+                System.out.println("Could not retrieve value for Exit field " + exitField.getName());
+            }
+
+            if (!newValue.equals(oldValue)) {
+                currentExit.doorName = newValue;
+                controller.fireRoomEvent(new RoomEvent(room, RoomProperty.EXITS.getFlagBits(), AMRoomExitPanel.this));
+            }
+
+            controller.releaseFocus();
+        }
     }
 }
