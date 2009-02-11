@@ -23,6 +23,6 @@ import java.io.File;
 
 public class AMWriter extends FileWriter {
     public void write(MudMap map, File file) {
-
+        
     }
 }
