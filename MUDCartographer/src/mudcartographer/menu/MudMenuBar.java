@@ -16,6 +16,7 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
+import mudcartographer.MudController;
 import mudcartographer.plugin.Plugin;
 
 import javax.swing.*;
@@ -23,15 +24,15 @@ import javax.swing.*;
 public class MudMenuBar extends JMenuBar{
 
     MudFileMenu mudFileMenu;
-    Plugin plugin;
+    MudController controller;
 
-    public MudMenuBar(Plugin plugin){
-        this.plugin = plugin;
+    public MudMenuBar(MudController controller){
+        this.controller = controller;
     }
 
     public void setup(){
 
-        mudFileMenu = new MudFileMenu(plugin);
+        mudFileMenu = new MudFileMenu(controller);
         this.add(mudFileMenu);
 
     }

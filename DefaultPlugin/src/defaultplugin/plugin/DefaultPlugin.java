@@ -21,8 +21,11 @@ import defaultplugin.gui.DefaultInfoPanel;
 import defaultplugin.map.DefaultRoom;
 import mudcartographer.plugin.Plugin;
 
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.List;
+import java.util.Arrays;
 
 public class DefaultPlugin implements Plugin {
     public Class getRoomDescriptionPanelClass() {
@@ -43,5 +46,9 @@ public class DefaultPlugin implements Plugin {
 
     public List<Component> getMenuComponents(String menuText) {
         return null;
+    }
+
+    public List<FileFilter> getFileFilters(){
+        return Arrays.asList((FileFilter) new FileNameExtensionFilter("MudCartographer", "mcd"));
     }
 }

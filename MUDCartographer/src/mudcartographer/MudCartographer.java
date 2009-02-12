@@ -36,12 +36,11 @@ public class MudCartographer{
 
     public static MudCartographer mudCartographer;
     private JFrame frame;
-    private MudMap map;
+    private MudMap mudMap;
     private MudController controller;
     private JScrollPane mapPainterScrollPane;
     private MudCartographerPanel roomInfoPanel;
     private MudCartographerPanel roomDescriptionPanel;
-    private MudMenuBar mudMenuBar;
     private JPanel mainPanel;
 
     public static void main(String[] args){
@@ -54,6 +53,8 @@ public class MudCartographer{
     }
 
     public void load(Plugin plugin){
+        MudMenuBar mudMenuBar;
+
         if(frame != null){
             frame.remove(mainPanel);
         }else{
@@ -61,16 +62,19 @@ public class MudCartographer{
             controller = MudController.getMudController();
         }
 
-
         if(plugin == null){
+            controller.plugin = null;
+            controller.mudMap = null;
             frame.add(createAndAddEmptyMainPanel());
-            mudMenuBar = createMenu();
+            mudMenuBar = createMenu(controller);
             frame.setJMenuBar(mudMenuBar);
             mudMenuBar.setIsEditing(false);
         }else{
             plugin.setup();
             loadPlugin(plugin);
-            mudMenuBar = createMenu(plugin);
+            controller.plugin = plugin;
+            controller.mudMap = mudMap;
+            mudMenuBar = createMenu(controller);
             frame.setJMenuBar(mudMenuBar);
             mudMenuBar.setIsEditing(true);
         }
@@ -108,8 +112,8 @@ public class MudCartographer{
     }
 
     private void createMap(Class roomClass) {
-        map = new MudMap(roomClass);
-        map.setupInitialRoom();
+        mudMap = new MudMap(roomClass);
+        mudMap.setupInitialRoom();
     }
 
     private void createSubPanels(Plugin plugin) {
@@ -133,7 +137,7 @@ public class MudCartographer{
     }
 
     private MapPainter createMapPainter() {
-        MapPainter painter = new MapPainter(map);
+        MapPainter painter = new MapPainter(mudMap);
         painter.setupEventHandling(controller);
         return painter;
     }
@@ -142,8 +146,8 @@ public class MudCartographer{
         return createMenu(null);
     }
 
-    private MudMenuBar createMenu(Plugin plugin){
-        MudMenuBar mudMenuBar = new MudMenuBar(plugin);
+    private MudMenuBar createMenu(MudController controller){
+        MudMenuBar mudMenuBar = new MudMenuBar(controller);
         mudMenuBar.setup();
         return mudMenuBar;
     }
@@ -170,7 +174,7 @@ public class MudCartographer{
     }
 
     private void fireInitialRoomEvent() {
-        controller.fireRoomEvent(new RoomEvent(map.getCurrentRoom(), RoomProperty.getAll(), this));
+        controller.fireRoomEvent(new RoomEvent(mudMap.getCurrentRoom(), RoomProperty.getAll(), this));
     }
 
     private void setupEventListeners() {
@@ -179,6 +183,6 @@ public class MudCartographer{
     }
 
     public MudMap getMudMap(){
-        return map;
+        return mudMap;
     }
 }

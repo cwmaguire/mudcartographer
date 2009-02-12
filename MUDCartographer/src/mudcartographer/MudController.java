@@ -18,6 +18,8 @@ package mudcartographer;
 
 import mudcartographer.event.RoomEvent;
 import mudcartographer.event.RoomEventListener;
+import mudcartographer.map.MudMap;
+import mudcartographer.plugin.Plugin;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,21 +30,15 @@ import java.util.Set;
  */
 public class MudController{
     private static MudController mudController;
+    public Plugin plugin;
+    public MudMap mudMap;
 
     private Set<RoomEventListener> listeners;
 
-    /**
-     * Don't allow users to create new MudControllers
-     */
     private MudController(){
         listeners = new HashSet<RoomEventListener>();
     }
 
-    /**
-     * Only allow one MudController
-     *
-     * @return the only MudController
-     */
     public static MudController getMudController(){
         if(mudController == null){
             mudController = new MudController();
@@ -50,18 +46,20 @@ public class MudController{
         return mudController;
     }
 
-    /**
-     * Allow classes to cause events through the controller
-     * @param roomEvent the event to be caused
-     */
     public void fireRoomEvent(RoomEvent roomEvent){
-        // fire events against registered targets that aren't the source
         for(RoomEventListener listener : listeners){
-            // to match one set to another I going to bitwise and them
-            if(!listener.equals(roomEvent.getSource()) && (roomEvent.getProperties() & listener.getRelevantRoomEventFlags()) > 0){
+            if(isListenerNotSource(roomEvent.getSource(), listener) && isListenerInterestedInEvent(roomEvent, listener)){
                 listener.updateRoom(roomEvent.getRoom());
             }
         }
+    }
+
+    private boolean isListenerInterestedInEvent(RoomEvent roomEvent, RoomEventListener listener) {
+        return (roomEvent.getProperties() & listener.getRelevantRoomEventFlags()) > 0;
+    }
+
+    private boolean isListenerNotSource(Object source, RoomEventListener listener) {
+        return !listener.equals(source);
     }
 
     public void releaseFocus(){
