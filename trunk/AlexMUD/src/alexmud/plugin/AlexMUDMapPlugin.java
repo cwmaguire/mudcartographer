@@ -22,7 +22,10 @@ import alexmud.gui.AMRoomKeywordDescriptionsPanel;
 import alexmud.map.AMRoom;
 import mudcartographer.plugin.Plugin;
 
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class AlexMUDMapPlugin implements Plugin {
@@ -44,5 +47,9 @@ public class AlexMUDMapPlugin implements Plugin {
 
     public List<Component> getMenuComponents(String menuText) {
         return null;
+    }
+
+    public List<FileFilter> getFileFilters(){
+        return Arrays.asList((FileFilter) new FileNameExtensionFilter("AlexMUD", "mca"));
     }
 }

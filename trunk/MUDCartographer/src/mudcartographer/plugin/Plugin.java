@@ -16,7 +16,9 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.plugin;
 
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
 public interface Plugin {
@@ -25,4 +27,6 @@ public interface Plugin {
     public Class getRoomClass();
     public List<Component> getMenuComponents(String menuText);
     public void setup();
+    public java.util.List<FileFilter> getFileFilters();
+    public void writeMap(File file, FileFilter fileFilter);
 }

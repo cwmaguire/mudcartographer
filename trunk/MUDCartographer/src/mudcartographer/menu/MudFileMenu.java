@@ -16,7 +16,7 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
-import mudcartographer.plugin.Plugin;
+import mudcartographer.MudController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,8 +28,8 @@ public class MudFileMenu extends MudMenu {
     protected static final String TEXT = "File";
     private MudSaveAsMenuItem mudSaveAsMenuItem;
 
-    public MudFileMenu(Plugin plugin){
-        super(plugin);
+    public MudFileMenu(MudController controller){
+        super(controller);
         setText(TEXT);
         setMnemonic(KeyEvent.VK_F);
         getAccessibleContext().setAccessibleDescription("Open, Save, Export, etc.");
@@ -42,7 +42,7 @@ public class MudFileMenu extends MudMenu {
     }
 
     protected List<Component> getMenusAndItems() {
-        mudSaveAsMenuItem = new MudSaveAsMenuItem();
+        mudSaveAsMenuItem = new MudSaveAsMenuItem(controller);
         return Arrays.asList((Component) new MudNewMenu(), mudSaveAsMenuItem);
     }
 
