@@ -55,7 +55,7 @@ public class MudSaveAsMenuItem extends MudMenuItem {
                 File file = fileChooser.getSelectedFile();
                 System.out.println("File name is " + (file == null ? "[null]" : file.getName()));
 
-                plugin.writeMap(file, fileChooser.getFileFilter());
+                plugin.writeMap(file, controller.mudMap, fileChooser.getFileFilter());
             }
         });
 

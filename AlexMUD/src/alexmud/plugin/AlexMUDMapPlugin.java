@@ -17,18 +17,27 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 package alexmud.plugin;
 
 import alexmud.constants.ExternalConstants;
+import alexmud.file.AlexMUDFileWriter;
+import alexmud.file.XMLFileWriter;
 import alexmud.gui.AMRoomInfoPanel;
 import alexmud.gui.AMRoomKeywordDescriptionsPanel;
 import alexmud.map.AMRoom;
+import mudcartographer.file.MudFileWriter;
+import mudcartographer.map.MudMap;
 import mudcartographer.plugin.Plugin;
 
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AlexMUDMapPlugin implements Plugin {
+    private Map<FileFilter, MudFileWriter> fileWritersByFilter;
+
     public Class getRoomDescriptionPanelClass() {
         return AMRoomKeywordDescriptionsPanel.class;
     }
@@ -43,6 +52,9 @@ public class AlexMUDMapPlugin implements Plugin {
 
     public void setup(){
         ExternalConstants.load();
+        fileWritersByFilter = new HashMap<FileFilter, MudFileWriter>();
+        fileWritersByFilter.put(new FileNameExtensionFilter("AlexMUD", "mca"), new AlexMUDFileWriter());
+        fileWritersByFilter.put(new FileNameExtensionFilter("MudCartographer", "mcd"), new XMLFileWriter());
     }
 
     public List<Component> getMenuComponents(String menuText) {
@@ -51,5 +63,12 @@ public class AlexMUDMapPlugin implements Plugin {
 
     public List<FileFilter> getFileFilters(){
         return Arrays.asList((FileFilter) new FileNameExtensionFilter("AlexMUD", "mca"));
+    }
+
+    public void writeMap(File file, MudMap map, FileFilter fileFilter) {
+        MudFileWriter fileWriter = fileWritersByFilter.get(fileFilter);
+        if(fileWriter != null){
+             fileWriter.write(file, map);
+        }
     }
 }
