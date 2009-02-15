@@ -19,13 +19,16 @@ package defaultplugin.plugin;
 import defaultplugin.gui.DefaultDescriptionPanel;
 import defaultplugin.gui.DefaultInfoPanel;
 import defaultplugin.map.DefaultRoom;
+import defaultplugin.file.XMLFileWriter;
 import mudcartographer.plugin.Plugin;
+import mudcartographer.map.MudMap;
 
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.List;
 import java.util.Arrays;
+import java.io.File;
 
 public class DefaultPlugin implements Plugin {
     public Class getRoomDescriptionPanelClass() {
@@ -50,5 +53,9 @@ public class DefaultPlugin implements Plugin {
 
     public List<FileFilter> getFileFilters(){
         return Arrays.asList((FileFilter) new FileNameExtensionFilter("MudCartographer", "mcd"));
+    }
+
+    public void writeMap(File file, MudMap map, FileFilter fileFilter) {
+        new XMLFileWriter().write(file, map);
     }
 }

@@ -16,11 +16,13 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
  */
 package mudcartographer.menu;
 
+import mudcartographer.MudCartographer;
 import mudcartographer.MudController;
 import mudcartographer.plugin.Plugin;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -32,7 +34,9 @@ public class MudSaveAsMenuItem extends MudMenuItem {
 
     public MudSaveAsMenuItem(final MudController controller) {
         final Plugin plugin = controller.plugin;
-        pluginFileFilters = plugin.getFileFilters();
+        if(plugin != null){
+            pluginFileFilters = plugin.getFileFilters();
+        }
 
         setText("Save as ...");
         setMnemonic(KeyEvent.VK_A);
@@ -55,10 +59,25 @@ public class MudSaveAsMenuItem extends MudMenuItem {
                 File file = fileChooser.getSelectedFile();
                 System.out.println("File name is " + (file == null ? "[null]" : file.getName()));
 
-                plugin.writeMap(file, controller.mudMap, fileChooser.getFileFilter());
+                if(file != null){
+                    addFileExtensionIfNecessary(fileChooser, file);
+
+                    plugin.writeMap(file, controller.mudMap, fileChooser.getFileFilter());
+                }
             }
         });
 
+    }
+
+    private void addFileExtensionIfNecessary(JFileChooser fileChooser, File file) {
+        FileFilter fileFilter = fileChooser.getFileFilter();
+
+        if(fileFilter.getClass().equals(FileNameExtensionFilter.class) && !file.getName().contains(".")){
+            boolean isRenamed = file.renameTo(new File(file.getName() + "." + ((FileNameExtensionFilter) fileFilter).getExtensions()[0]));
+            if(!isRenamed){
+                JOptionPane.showMessageDialog(MudCartographer.mudCartographer.getFrame(), "Unable to add filename extension", "Unable To Add Extension", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public void setIsMapLoaded(boolean isMapLoaded) {

@@ -75,8 +75,8 @@ public class AlexMUDFileWriter extends MudFileWriter {
         List<RoomKeywordDescription> keywordDescs = room.getKeywordDescriptions();
         List<String> flagNames = new ArrayList<String>(room.flags.keySet());
 
-        roomString.append("#Room").append(room.getID()).append(DOUBLE_LF);
-        roomString.append("#Name~").append(SINGLE_LF).append(room.getName()).append(TILDE).append(DOUBLE_LF);
+        roomString.append("#Room").append(SOFT_TAB).append(room.getID()).append(DOUBLE_LF);
+        roomString.append("#Name~").append(SINGLE_LF).append(room.getName() == null ? "Room " + room.getID() : room.getName()).append(TILDE).append(DOUBLE_LF);
         roomString.append("#Description~").append(room.getDescription()).append(TILDE).append(DOUBLE_LF);
 
         if(keywordDescs != null && !keywordDescs.isEmpty()){
@@ -103,9 +103,21 @@ public class AlexMUDFileWriter extends MudFileWriter {
 
         for(Exit exit : room.exits){
             if(exit != null){
-                roomString.append("#Exit:").append(SOFT_TAB).append(DOUBLE_QUOTE).append(exit.getDirection()).append(DOUBLE_QUOTE);
+                roomString.append("#Exit:").append(SOFT_TAB).append(DOUBLE_QUOTE).append(exit.getDirection()).append(DOUBLE_QUOTE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#Destination: ").append(SOFT_TAB).append(exit.destination).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#LookDesc~:").append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append(exit.lookDescription).append(TILDE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#Keywords~:").append(SOFT_TAB).append(exit.keywords).append(TILDE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#DoorName~:").append(SOFT_TAB).append(exit.doorName).append(TILDE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#ExitFlags:").append(SOFT_TAB).append(DOUBLE_QUOTE).append("DOOR").append(DOUBLE_QUOTE).append(TILDE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#KeyDBnum:").append(SOFT_TAB).append(exit.databaseKey).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#LockDifficulty:").append(SOFT_TAB).append(exit.lockDifficulty).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#KeyVnum:").append(SOFT_TAB).append(exit.vKey).append(SINGLE_LF);
+                roomString.append("#Exit:").append(SINGLE_LF);
             }
         }
+
+        roomString.append("#EndRoom").append(DOUBLE_LF);
 
         return roomString.toString();
     }
