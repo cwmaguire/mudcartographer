@@ -17,15 +17,27 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 
 package alexmud.file;
 
+import alexmud.map.AMRoom;
+import alexmud.map.Exit;
+import alexmud.map.RoomKeywordDescription;
+import mudcartographer.file.MudFileWriter;
 import mudcartographer.map.MudMap;
+import mudcartographer.map.Room;
 
-import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AlexMUDFileWriter {
-    public static void write(File file, MudMap map) {
+public class AlexMUDFileWriter extends MudFileWriter {
+    private static final String SINGLE_LF = "\n\n";
+    private static final String DOUBLE_LF = "\n\n";
+    private static final String SOFT_TAB = "    ";
+    private static final String TILDE = "~";
+    private static final String DOUBLE_QUOTE = "\"";
+
+    public void write(File file, MudMap map) {
 
         try {
             FileOutputStream fileStream = new FileOutputStream(file);
@@ -34,7 +46,7 @@ public class AlexMUDFileWriter {
                 BufferedOutputStream bufferedStream = new BufferedOutputStream(fileStream);
 
                 try {
-                    bufferedStream.write(AlexMUDFileWriter.getString(map).toCharArray());
+                    bufferedStream.write(createMapFile(map).getBytes());
                     bufferedStream.flush();
                 } finally {
                     bufferedStream.close();
@@ -47,7 +59,204 @@ public class AlexMUDFileWriter {
         }
     }
 
-    public static String getString(MudMap map){
-        return "Wow, it saved!";
+    public String createMapFile(MudMap map){
+        List<Room> rooms = map.getRooms();
+        StringBuilder mapString = new StringBuilder();
+
+        for(Room room : rooms){
+            mapString.append(createRoomString((AMRoom) room));
+        }
+
+        return mapString.toString();
+    }
+
+    public String createRoomString(AMRoom room){
+        StringBuilder roomString = new StringBuilder();
+        List<RoomKeywordDescription> keywordDescs = room.getKeywordDescriptions();
+        List<String> flagNames = new ArrayList<String>(room.flags.keySet());
+
+        roomString.append("#Room").append(room.getID()).append(DOUBLE_LF);
+        roomString.append("#Name~").append(SINGLE_LF).append(room.getName()).append(TILDE).append(DOUBLE_LF);
+        roomString.append("#Description~").append(room.getDescription()).append(TILDE).append(DOUBLE_LF);
+
+        if(keywordDescs != null && !keywordDescs.isEmpty()){
+            roomString.append("#XtraDescs:").append(SINGLE_LF);
+
+            for(RoomKeywordDescription keywordDesc : room.getKeywordDescriptions()){
+                roomString.append(SOFT_TAB).append("#Keywords~:").append(keywordDesc.keywords).append(TILDE).append(SINGLE_LF);
+                roomString.append(SOFT_TAB).append("#Description~:").append(SINGLE_LF).append(keywordDesc.description).append(TILDE).append(SINGLE_LF);
+            }
+
+            roomString.append("#EndExtraDescs").append(DOUBLE_LF);
+        }
+
+        roomString.append("#Flags").append(SOFT_TAB).append(DOUBLE_QUOTE);
+
+        for(String flagName : flagNames){
+            if(room.isFlagSet(flagName)){
+                roomString.append(flagName).append(" ");
+            }
+        }
+        roomString.append("\"").append(SINGLE_LF);
+
+        roomString.append("#Terrain").append(SOFT_TAB).append(DOUBLE_QUOTE).append(room.getTerrain()).append(DOUBLE_QUOTE).append(SINGLE_LF);
+
+        for(Exit exit : room.exits){
+            if(exit != null){
+                roomString.append("#Exit:").append(SOFT_TAB).append(DOUBLE_QUOTE).append(exit.getDirection()).append(DOUBLE_QUOTE);
+            }
+        }
+
+        return roomString.toString();
     }
 }
+
+/*
+
+#Room nnnn
+
+
+
+#Name~
+example name~
+
+#Description~
+example desc~
+
+[used to match descriptions against “look” keywords]
+
+#XtraDescs:
+            #Keywords~:     itemlore-dir-desc black streak~
+            #Description~:
+            example desc~
+#EndExtraDescs
+
+[double-quoted, space-delimited list]
+#Flags              "INDOORS E-ENCOUNTER P-ENCOUNTER"
+#Terrain             "Inside"
+#Exit:                "north"
+            [required to go anywhere]
+            (opt) #Destination:         1234 (room number)
+            [may be used alone to supply a description for a direction without the option to go in that direction]
+
+            #LookDesc~:
+            example desc~
+
+            (opt) #Keywords~:         door metal~
+            (opt) #DoorName~:       metal door~
+            (opt) #ExitFlags:           "DOOR"
+            (opt) #KeyDBnum:         91
+            (opt) #LockDifficulty:     100
+            (opt) #KeyVnum:           0
+
+#EndExit
+
+#EndRoom
+
+ */
+
+/*
+
+Exit Flags
+
+DOOR
+CLOSED
+LOCKED
+SECRET
+SWITCH-ACTIVATED
+TRAPPED
+NO-MOB
+ILLUSION
+PLURAL
+UNOBVIOUS
+AUTOCLOSE
+ONE-WAY
+BEND
+WILDERNESS
+DISPLAY-ON-ENTRY
+MOVE-DESC-ONLY
+FOLIAGE
+CUT-FOLIAGE
+CLIMB
+ROOM-DESC
+GENERATED
+CONTINUATION
+
+ */
+
+/*
+
+Room Flags
+
+DARK
+SAFE
+FALL-TRAP
+INDOORS
+NO-SUMMON
+S-ENCOUNTER
+E-ENCOUNTER
+P-ENCOUNTER
+HAS-LIGHT
+PRIVATE
+SUN-LIGHT
+NO-MAGIC
+RESTRICTED
+SOUNDPROOF
+NO-SLEEP
+DANGEROUS
+PRISON
+WILDERNESS
+WATER
+SALTWATER
+POISONED
+BUSY
+NO-PURGE
+ARENA
+TELEPORT
+SAVES
+
+ */
+
+/*
+Terrain Types
+
+Inside
+City Street
+Field
+Forest
+Hills
+Mountains
+Water-Wadable
+Water-Unswimable
+Air
+Water-Rough
+Desert
+Ice
+Underwater
+Dungeon
+River-North
+River-Northeast
+River-East
+River-Southeast
+River-South
+River-Southwest
+River-West
+River-Northwest
+Road
+Trail
+Tunnel
+Swamp
+Plains
+Sewer
+Garden
+City Square
+Beach
+Passage
+Forest Path
+Hilly Path
+Mountain Path
+Cavern
+Jungle
+Jungle Path
+Tree
+*/

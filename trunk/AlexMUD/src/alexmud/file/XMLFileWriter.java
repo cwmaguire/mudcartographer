@@ -17,14 +17,15 @@ along with MUD Cartographer.  If not, see <http://www.gnu.org/licenses/>.
 
 package alexmud.file;
 
+import mudcartographer.file.MudFileWriter;
 import mudcartographer.map.MudMap;
 
+import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.beans.XMLEncoder;
 
-public class XMLFileWriter {
-    public static void write(File file, MudMap map) {
+public class XMLFileWriter extends MudFileWriter {
+    public void write(File file, MudMap map) {
         try {
             FileOutputStream fileStream = new FileOutputStream(file);
 

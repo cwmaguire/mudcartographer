@@ -36,8 +36,8 @@ public class AMRoom extends Room {
     public static int nextID;
     // use the Direction enum to get the ordinals into the array of rooms
     private Room[] rooms = new Room[10];
-    private Exit[] exits = new Exit[10];
-    private Map<String, Boolean> flags = new HashMap<String, Boolean>();
+    public Exit[] exits = new Exit[10];
+    public Map<String, Boolean> flags = new HashMap<String, Boolean>();
     private char symbol = 'a';
     // what was the ID of the last operation performed on this room
     private int currentOperationID;

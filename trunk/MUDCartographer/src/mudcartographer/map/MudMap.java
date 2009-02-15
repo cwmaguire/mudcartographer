@@ -18,6 +18,7 @@ package mudcartographer.map;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -375,6 +376,29 @@ public class MudMap{
      */
     public Direction getKeyDirection(KeyEvent e){
         return keyEventDirections.get(e.getKeyCode());
+    }
+
+    public java.util.List<Room> getRooms(){
+        java.util.List<Room> rooms = new ArrayList<Room>();
+        currentOperationID = getNewCurrentOperationID();
+        return addRoomsToListRecursive(getInitialRoom(), rooms);
+    }
+
+    public java.util.List<Room> addRoomsToListRecursive(Room room, java.util.List<Room> list){
+        Room nextRoom;
+
+        room.setCurrentOperationID(currentOperationID);
+        list.add(room);
+
+        // crank through all the connected rooms and draw them
+        for(MudMap.Direction d : MudMap.Direction.values()){
+            nextRoom = room.getRoom(d);
+            if(nextRoom != null && nextRoom.getCurrentOperationID() < currentOperationID){
+                addRoomsToListRecursive(room.getRoom(d), list);
+            }
+        }
+
+        return list;
     }
 
     /**
